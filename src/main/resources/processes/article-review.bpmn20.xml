@@ -29,10 +29,10 @@
             </conditionExpression>
         </sequenceFlow>
         <serviceTask id="tutorialApproved" name="Publish the approved tutorial."
-          flowable:class="com.process.services.PublishArticleService" />
+          flowable:class="com.flow.services.PublishArticleService" />
         <sequenceFlow sourceRef="tutorialApproved" targetRef="end" />
         <serviceTask id="tutorialRejected" name="Send out rejection email"
-          flowable:class="com.process.services.SendMailService" />
+          flowable:class="com.flow.services.SendMailService" />
         <sequenceFlow sourceRef="tutorialRejected" targetRef="end" />
         <endEvent id="end" />
     </process>

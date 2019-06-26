@@ -29,6 +29,7 @@ public class ArticleWorkflowService {
         variables.put("author", article.getAuthor());
         variables.put("url", article.getUrl());
         runtimeService.startProcessInstanceByKey("articleReview", variables);
+        
     }
   
     @Transactional
