@@ -1,4 +1,4 @@
-package com.process.model;
+package com.flow.model;
 
 public class Approval {
 	private String status;

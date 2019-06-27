@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.process.model.Approval;
-import com.process.model.Article;
+import com.flow.model.Approval;
+import com.flow.model.Article;
+
 
 @Service
 public class ArticleWorkflowService {
