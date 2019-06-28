@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flow.model.Approval;
 import com.flow.model.Article;
-import com.flow.services.ArticleWorkflowService;
+import com.flow.service.ArticleWorkflowService;
 
 
 @RestController
@@ -21,13 +21,13 @@ public class ArticleWorkflowController {
 private ArticleWorkflowService service;
 @PostMapping("/submit")
 public void submit (@RequestBody Article article) {
-	System.out.println("Process started.");
 	service.startProcess(article);
+	System.out.println("Process started.");
 }
 
 @GetMapping("/tasks")
 public List<Article> getTasks(@RequestParam String assignee) {
-	System.out.println("yoyoyo yoyoy yoyo yo bruh");
+	System.out.println("Task Controller");
     return service.getTasks(assignee);
 }
 

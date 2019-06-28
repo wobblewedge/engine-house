@@ -1,4 +1,4 @@
-package com.flow.services;
+package com.flow.service;
 
 import java.util.HashMap;
 import java.util.List;
