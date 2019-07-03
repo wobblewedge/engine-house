@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "flowable.rest.app.authentication-mode",
+  "type": "java.lang.String",
+  "description": "A description for 'flowable.rest.app.authentication-mode'"
+}]}
