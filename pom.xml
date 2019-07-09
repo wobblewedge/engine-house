@@ -11,7 +11,7 @@
 	</parent>
 	
 	<groupId>com.flow</groupId>
-	<artifactId>engine-house</artifactId>
+	<artifactId>loan-engine-house</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>engine-house</name>
 	<description>Demo project for Spring Boot</description>
@@ -46,10 +46,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-  			<groupId>com.fasterxml.jackson.dataformat</groupId>
- 			 <artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.flowable</groupId>

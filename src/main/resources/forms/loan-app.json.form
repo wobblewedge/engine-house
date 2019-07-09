@@ -1,0 +1,60 @@
+{
+    "key": "form1",
+    "name": "My first form",
+    "fields": [
+        {
+            "id": "Full Name",
+            "name": "fullName",
+            "type": "text",
+            "required": true,
+            "placeholder": "empty"
+        },{
+            "id": "Primary Address",
+            "name": "primaryAddress",
+            "type": "multi-line-text",
+            "required": true,
+            "placeholder": "empty"
+        },{
+            "id": "Age",
+            "name": "age",
+            "type": "integer",
+            "required": true,
+            "placeholder": "empty"
+        },{
+            "id": "Monthly Income",
+            "name": "monthlyIncome",
+            "type": "integer",
+            "required": true,
+            "placeholder": "empty"
+        },{
+            "id": "Debts",
+            "name": "debts",
+            "type": "integer",
+            "required": true,
+            "placeholder": "empty"
+        },{
+            "id": "Assets",
+            "name": "assets",
+            "type": "integer",
+            "required": true,
+            "placeholder": "empty"
+        },{
+            "id": "Credit Score",
+            "name": "creditScore",
+            "type": "integer",
+            "required": true,
+            "placeholder": "empty"
+        }
+        
+    ],
+    "outcomes": [
+        {
+            "id": "null",
+            "name": "Accept"
+        },
+        {
+            "id": "null",
+            "name": "Reject"
+        }
+    ]
+}
