@@ -1,4 +1,4 @@
-package com.flow.controller;
+package com.flow.enginehouse.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flow.model.Applicant;
-import com.flow.model.Approval;
-import com.flow.model.TaskRepresentation;
-import com.flow.services.ArticleWorkflowService;
+import com.flow.enginehouse.model.Applicant;
+import com.flow.enginehouse.model.Approval;
+import com.flow.enginehouse.model.TaskRepresentation;
+import com.flow.enginehouse.services.ArticleWorkflowService;
 
 
 @RestController
@@ -26,9 +26,6 @@ public class ArticleWorkflowController {
 
 @Autowired
 private ArticleWorkflowService service;
-
-@Autowired
-private FormService formService;
 
 @PostMapping("/submit")
 public void submit (@RequestBody Applicant applicant) {

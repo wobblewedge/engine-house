@@ -1,4 +1,4 @@
-package com.flow.model;
+package com.flow.enginehouse.model;
 
 public class Applicant {
 	

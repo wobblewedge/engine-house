@@ -1,4 +1,4 @@
-package com.flow.services;
+package com.flow.enginehouse.services;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,37 +27,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.flow.enginehouse.model.Applicant;
+import com.flow.enginehouse.model.Approval;
+import com.flow.enginehouse.model.TaskRepresentation;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
-import com.flow.model.Approval;
-import com.flow.model.Applicant;
-import com.flow.model.TaskRepresentation;
 
 @Service
 public class ArticleWorkflowService {
  
-    ProcessEngine processEngine = ProcessEngineConfiguration
-    		.createStandaloneInMemProcessEngineConfiguration()
-    		.buildProcessEngine();
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private RepositoryService repositoryService;
+    @Autowired
+    private ProcessEngine processEngine;
+    @Autowired
+    private FormService formService;
     
-    
-    IdentityService identityService = processEngine.getIdentityService();
-    
-    TaskService taskService = processEngine.getTaskService();
-    
-    RepositoryService repositoryService = processEngine.getRepositoryService();
-
-    RuntimeService runtimeService = processEngine.getRuntimeService();
-    
-    @Transactional
-    public void createDeployment() {
-    	Deployment deployment = repositoryService.createDeployment()
-    			  .addClasspathResource("processes/loan-application.bpmn20.xml")
-    			  .deploy();
-    	System.out.println(deployment.getKey());
-    }
     @Transactional
     public void startProcess(Applicant applicant) {
         Map<String, Object> theApplicant = new HashMap<>();
