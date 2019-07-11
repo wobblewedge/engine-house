@@ -18,19 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.flow.enginehouse.model.Applicant;
 import com.flow.enginehouse.model.Approval;
 import com.flow.enginehouse.model.TaskRepresentation;
-import com.flow.enginehouse.services.ArticleWorkflowService;
+import com.flow.enginehouse.services.ProcessWorkflowService;
 
 
 @RestController
-public class ArticleWorkflowController {
+public class ProcessWorkflowController {
 
 @Autowired
-private ArticleWorkflowService service;
-
+private ProcessWorkflowService service;
+@RequestMapping
 @PostMapping("/submit")
-public void submit (@RequestBody Applicant applicant) {
+public String submit (@RequestBody Applicant applicant) {
 	System.out.println("Process started.");
-	service.startProcess(applicant);
+	service.manageDeployment();
+	return service.startProcess(applicant);
 }
 
 @GetMapping("/tasks")

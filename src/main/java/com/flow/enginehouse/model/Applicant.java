@@ -10,10 +10,8 @@ public class Applicant {
 	private int debts;
 	private int assets;
 	private int credit;
-
-	public String getFullName() {
-		return fullName;
-	}
+	
+	public Applicant() {}
 
 	public Applicant(String id, String fullName, String address, int age, int income, int debts, int assets,
 			int credit) {
@@ -26,6 +24,10 @@ public class Applicant {
 		this.debts = debts;
 		this.assets = assets;
 		this.credit = credit;
+	}
+	
+	public String getFullName() {
+		return fullName;
 	}
 
 	public void setFullName(String fullName) {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.annotations.Param;
 import org.flowable.engine.FormService;
 import org.flowable.engine.IdentityService;
 import org.flowable.engine.ProcessEngine;
@@ -13,6 +14,7 @@ import org.flowable.engine.ProcessEngines;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.app.AppModel;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -37,7 +39,7 @@ import java.io.BufferedInputStream;
 import java.util.ArrayList;
 
 @Service
-public class ArticleWorkflowService {
+public class ProcessWorkflowService {
  
     @Autowired
     private RuntimeService runtimeService;
@@ -51,20 +53,28 @@ public class ArticleWorkflowService {
     private FormService formService;
     
     @Transactional
-    public void startProcess(Applicant applicant) {
-        Map<String, Object> theApplicant = new HashMap<>();
+    public void manageDeployment() {
+    	System.out.println(repositoryService.createProcessDefinitionQuery().deploymentId("loan"));
+    	    }
+    @Transactional
+    public String startProcess(Applicant applicant) {
+    	Map<String, Object> map = new HashMap<>();
         //Map each property that will be collected by the form.
        // formEngine.getFormService().
-        theApplicant.put("id", applicant.getId());
-        theApplicant.put("name", applicant.getFullName());
-        theApplicant.put("address", applicant.getAddress());
-        theApplicant.put("age", applicant.getAge());
-        theApplicant.put("income", applicant.getIncome());
-        theApplicant.put("assets", applicant.getAssets());
-        theApplicant.put("debts", applicant.getDebts());
-        theApplicant.put("credit", applicant.getCredit());
-        ProcessInstance pi = runtimeService.startProcessInstanceByKey("loan-application", theApplicant);
-         
+        map.put("id", applicant.getId());
+        map.put("applicant", applicant.getAddress());
+        map.put("age", applicant.getAge());
+        map.put("address", applicant.getAddress());
+        map.put("assets", applicant.getAssets());
+        map.put("debts", applicant.getDebts());
+        map.put("credit", applicant.getCredit());
+
+
+
+       // runtimeService.startProcessInstanceWithForm(processDefinitionId, outcome, variables, processInstanceName)
+        ProcessInstance pi = runtimeService.startProcessInstanceByKey("loan", map);
+        System.out.println(pi.getId());
+        return pi.getId();
     }
   
     @Transactional
