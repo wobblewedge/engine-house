@@ -11,7 +11,7 @@
 	</parent>
 	
 	<groupId>com.flow</groupId>
-	<artifactId>loan-engine-house</artifactId>
+	<artifactId>loan0engine-house</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>engine-house</name>
 	<description>Demo project for Spring Boot</description>
@@ -49,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.flowable</groupId>
-			<artifactId>flowable-spring-boot-starter</artifactId>
+			<artifactId>flowable-spring-boot-starter-rest</artifactId>
 			<version>6.4.1</version>
 		</dependency>
 	</dependencies>

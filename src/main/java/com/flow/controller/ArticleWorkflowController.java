@@ -3,6 +3,7 @@ package com.flow.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.flowable.engine.FormService;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flow.model.Applicant;
 import com.flow.model.Approval;
-import com.flow.model.Article;
 import com.flow.model.TaskRepresentation;
 import com.flow.services.ArticleWorkflowService;
 
@@ -26,11 +27,13 @@ public class ArticleWorkflowController {
 @Autowired
 private ArticleWorkflowService service;
 
+@Autowired
+private FormService formService;
 
 @PostMapping("/submit")
-public void submit (@RequestBody Article article) {
+public void submit (@RequestBody Applicant applicant) {
 	System.out.println("Process started.");
-	service.startProcess(article);
+	service.startProcess(applicant);
 }
 
 @GetMapping("/tasks")

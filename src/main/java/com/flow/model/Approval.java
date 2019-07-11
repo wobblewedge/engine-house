@@ -1,11 +1,11 @@
 package com.flow.model;
 
 public class Approval {
-	private String status;
-	public String getStatus() {
+	private boolean status;
+	public boolean getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 	public String getId() {

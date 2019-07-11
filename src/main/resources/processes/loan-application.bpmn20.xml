@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
   <process id="loan-application" name="loan-application" isExecutable="true">
-    <startEvent id="startEvent1" name="start"></startEvent>
+    <startEvent id="submit" name="start"></startEvent>
     <businessRuleTask id="sid-0DB493F0-8918-4949-9BCB-3EAA06344D94" name="loan decision service" ></businessRuleTask>
-    <sequenceFlow id="sid-E2EC2127-7A58-49C7-B107-9DFAC495C0E6" sourceRef="startEvent1" targetRef="sid-0DB493F0-8918-4949-9BCB-3EAA06344D94"></sequenceFlow>
+    <sequenceFlow id="sid-E2EC2127-7A58-49C7-B107-9DFAC495C0E6" sourceRef="submit" targetRef="sid-0DB493F0-8918-4949-9BCB-3EAA06344D94"></sequenceFlow>
     <exclusiveGateway id="sid-685611A4-82CA-47CD-B1E3-E0C86F075F39" name="is loan
 auto-approved" default="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99"></exclusiveGateway>
-    <userTask id="sid-C8740DB8-61CC-4DA2-8C75-00AF8537B6B3" name="review loan applicant" flowable:assignee="admin"></userTask>
+    <userTask id="sid-C8740DB8-61CC-4DA2-8C75-00AF8537B6B3" name="review loan applicant" flowable:assignee="${assignee}"></userTask>
     <serviceTask id="sid-87066F57-B50D-4D43-BFAB-0724ACEF4424" name="send result" flowable:class="EmailResults.class"></serviceTask>
     <sequenceFlow id="sid-EE6E9FA3-67B5-483D-8062-3E7022937AB6" sourceRef="sid-0DB493F0-8918-4949-9BCB-3EAA06344D94" targetRef="sid-685611A4-82CA-47CD-B1E3-E0C86F075F39"></sequenceFlow>
     <endEvent id="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" name="end"></endEvent>
@@ -19,7 +19,7 @@ auto-approved" default="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99"></exclusiveGat
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_applicant-name">
     <bpmndi:BPMNPlane bpmnElement="loan-application" id="BPMNPlane_loan-application">
-      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+      <bpmndi:BPMNShape bpmnElement="submit" id="BPMNShape_submit">
         <omgdc:Bounds height="30.0" width="30.0" x="15.0" y="245.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-0DB493F0-8918-4949-9BCB-3EAA06344D94" id="BPMNShape_sid-0DB493F0-8918-4949-9BCB-3EAA06344D94">
