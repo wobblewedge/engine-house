@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.apache.ibatis.annotations.Param;
 import org.flowable.engine.FormService;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.IdentityService;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.ProcessEngineConfiguration;
@@ -15,6 +16,8 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.app.AppModel;
+import org.flowable.engine.form.StartFormData;
+import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -51,30 +54,52 @@ public class ProcessWorkflowService {
     private ProcessEngine processEngine;
     @Autowired
     private FormService formService;
-    
+	
     @Transactional
     public void manageDeployment() {
-    	System.out.println(repositoryService.createProcessDefinitionQuery().deploymentId("loan"));
     	    }
+    
+    
     @Transactional
     public String startProcess(Applicant applicant) {
-    	Map<String, Object> map = new HashMap<>();
+    	   repositoryService = processEngine.getRepositoryService();
+    		Deployment deployment = repositoryService.createDeployment()
+    		  .addClasspathResource("processes/loan-application.bpmn20.xml")
+    		  .deploy();
+    		
+    	Map<String, Object> variables = new HashMap<>();
         //Map each property that will be collected by the form.
        // formEngine.getFormService().
-        map.put("id", applicant.getId());
-        map.put("applicant", applicant.getAddress());
-        map.put("age", applicant.getAge());
-        map.put("address", applicant.getAddress());
-        map.put("assets", applicant.getAssets());
-        map.put("debts", applicant.getDebts());
-        map.put("credit", applicant.getCredit());
+        variables.put("id", applicant.getId());
+        variables.put("applicant", applicant.getAddress());
+        variables.put("age", applicant.getAge());
+        variables.put("address", applicant.getAddress());
+        variables.put("assets", applicant.getAssets());
+        variables.put("debts", applicant.getDebts());
+        variables.put("credit", applicant.getCredit());
 
-
-
+       //ProcessInstance pi = runtimeService.startProcessInstanceWithForm("loan-application", String outcome, map, String processInstanceName);
        // runtimeService.startProcessInstanceWithForm(processDefinitionId, outcome, variables, processInstanceName)
-        ProcessInstance pi = runtimeService.startProcessInstanceByKey("loan", map);
-        System.out.println(pi.getId());
-        return pi.getId();
+        ProcessInstance instance = runtimeService.startProcessInstanceByKey("loan-application", variables);
+        StartFormData formData= formService.getStartFormData(instance.getProcessDefinitionId());
+        HistoryService historyService = processEngine.getHistoryService();
+        
+        return instance.getDescription();
+    }
+    
+    //Method used to track time elapsed during activity aspects of process.
+    public void writeHistory(HistoryService historyService, ProcessInstance instance) {
+    	List<HistoricActivityInstance> activities =
+    	          historyService.createHistoricActivityInstanceQuery()
+    	           .processInstanceId(instance.getId())
+    	           .finished()
+    	           .orderByHistoricActivityInstanceEndTime().asc()
+    	           .list();
+
+    	        for (HistoricActivityInstance activity : activities) {
+    	          System.out.println(activity.getActivityId() + " took "
+    	            + activity.getDurationInMillis() + " milliseconds");
+    	        }
     }
   
     @Transactional

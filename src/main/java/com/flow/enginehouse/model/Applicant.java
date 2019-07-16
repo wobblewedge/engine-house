@@ -10,6 +10,16 @@ public class Applicant {
 	private int debts;
 	private int assets;
 	private int credit;
+	private boolean approval;
+
+	
+	public boolean isApproval() {
+		return approval;
+	}
+
+	public void setApproval(boolean approval) {
+		this.approval = approval;
+	}
 	
 	public Applicant() {}
 
@@ -24,6 +34,7 @@ public class Applicant {
 		this.debts = debts;
 		this.assets = assets;
 		this.credit = credit;
+		this.approval = false;
 	}
 	
 	public String getFullName() {
