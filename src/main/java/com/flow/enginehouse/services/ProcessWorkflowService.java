@@ -16,10 +16,12 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.app.AppModel;
+import org.flowable.engine.form.FormData;
 import org.flowable.engine.form.StartFormData;
 import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.form.api.FormDefinition;
 import org.flowable.form.api.FormModel;
@@ -60,27 +62,27 @@ public class ProcessWorkflowService {
     private FormRepositoryService formRepoService;
     @Autowired
     private FormEngine formEngine;
+	@Autowired
+	HistoryService historyService;
 	
+	private ProcessInstance instance;
     @Transactional
     public void manageDeployment() {
     	String formPath = "forms/loan-app.form";
     	String processPath = "processes/loan-2-app.bpmn20.xml";
     	//deploy process repository
-    	 repositoryService = processEngine.getRepositoryService();
  		Deployment deployment = repositoryService.createDeployment()
  		  .addClasspathResource(processPath)
  		  .deploy();
  		//deploy form repository
- 		String formDefinition = "forms/loan-app.form";
  		formRepoService.createDeployment()
  		    .addClasspathResource(formPath)
  		    .deploy();
-    	    }
+    }
     
     
     @Transactional
     public String startProcess(Applicant applicant) {
-    		
     	Map<String, Object> variables = new HashMap<>();
         //Map each property that will be collected by the form.
        // formEngine.getFormService().
@@ -94,17 +96,25 @@ public class ProcessWorkflowService {
 
        //ProcessInstance pi = runtimeService.startProcessInstanceWithForm("loan-application", String outcome, map, String processInstanceName);
        // runtimeService.startProcessInstanceWithForm(processDefinitionId, outcome, variables, processInstanceName)
-        ProcessInstance instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
-        System.out.println(instance.getDescription());
-        FormDefinition fd = formRepoService.getFormDefinition("loan-app");
+       instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
+       System.out.println("Number of process definitions : "
+               + repositoryService.createProcessDefinitionQuery().count());
+       System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
+       FormData fd = formService.getStartFormData(instance.getProcessDefinitionId());
         FormModel form = (FormModel) formService.getRenderedStartForm(instance.getProcessDefinitionId());
-        HistoryService historyService = processEngine.getHistoryService();
+        historyService = processEngine.getHistoryService();
+        System.out.println("Number of tasks after process start: "
+                + taskService.createTaskQuery().count());
         
-        return instance.getDescription();
+        return instance.getRootProcessInstanceId();
     }
     
+    
+    
     //Method used to track time elapsed during activity aspects of process.
-    public void writeHistory(HistoryService historyService, ProcessInstance instance) {
+    public void writeHistory() {
+    	
+    
     	List<HistoricActivityInstance> activities =
     	          historyService.createHistoricActivityInstanceQuery()
     	           .processInstanceId(instance.getId())
@@ -122,6 +132,7 @@ public class ProcessWorkflowService {
     public List<Task> getTasks(String assignee) {
        List<Task> task= taskService.createTaskQuery()
           .taskAssignee(assignee)
+          .active()
           .list();
        return task;
        

@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "flowable.app.admin.user-id",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.app.admin.user-id'"
+  },
+  {
+    "name": "flowable.app.admin.password",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.app.admin.password'"
+  },
+  {
+    "name": "flowable.app.admin.first-name",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.app.admin.first-name'"
+  },
+  {
+    "name": "flowable.app.admin.last-name",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.app.admin.last-name'"
+  },
+  {
+    "name": "-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH",
+    "type": "java.lang.String",
+    "description": "A description for '-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH'"
+  }
+]}

@@ -6,12 +6,12 @@
         <flowable:value>false</flowable:value>
       </extensionElements>
     </dataObject>
-    <startEvent id="start" name="start" flowable:formKey="loan-app"></startEvent>
+    <startEvent id="start" name="start"></startEvent>
     <exclusiveGateway id="isAutoApproved" name="is loan
 auto-approved" default="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99">
       <documentation>approval</documentation>
     </exclusiveGateway>
-    <userTask id="manual-review" name="review loan applicant"></userTask>
+    <userTask id="manual-review" name="review loan applicant" flowable:assignee="admin"></userTask>
     <serviceTask id="sendResult" name="send result" flowable:expression="com.flow.enginehouse.ReviewApplication"></serviceTask>
     <endEvent id="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" name="end"></endEvent>
     <serviceTask id="auto-review" name="Assess application" flowable:expression="com.flow.enginehouse.services.PublishArticleService"></serviceTask>
