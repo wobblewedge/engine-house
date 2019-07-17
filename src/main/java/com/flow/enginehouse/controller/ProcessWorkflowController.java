@@ -36,7 +36,7 @@ public String submit (@RequestBody Applicant applicant) {
 
 @GetMapping("/tasks")
 public List<Task> getTasks(@RequestParam String assignee) {
-	System.out.println("yoyoyo yoyoy yoyo yo bruh");
+	System.out.println("Tasks as follows:");
     return service.getTasks(assignee);
 }
 

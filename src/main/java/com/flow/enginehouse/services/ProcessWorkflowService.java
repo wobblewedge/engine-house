@@ -21,7 +21,9 @@ import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.form.api.FormDefinition;
 import org.flowable.form.api.FormModel;
+import org.flowable.form.api.FormRepositoryService;
 import org.flowable.form.engine.FormEngine;
 import org.flowable.form.engine.FormEngines;
 import org.flowable.task.api.Task;
@@ -54,24 +56,36 @@ public class ProcessWorkflowService {
     private ProcessEngine processEngine;
     @Autowired
     private FormService formService;
+    @Autowired
+    private FormRepositoryService formRepoService;
+    @Autowired
+    private FormEngine formEngine;
 	
     @Transactional
     public void manageDeployment() {
+    	String formPath = "forms/loan-app.form";
+    	String processPath = "processes/loan-2-app.bpmn20.xml";
+    	//deploy process repository
+    	 repositoryService = processEngine.getRepositoryService();
+ 		Deployment deployment = repositoryService.createDeployment()
+ 		  .addClasspathResource(processPath)
+ 		  .deploy();
+ 		//deploy form repository
+ 		String formDefinition = "forms/loan-app.form";
+ 		formRepoService.createDeployment()
+ 		    .addClasspathResource(formPath)
+ 		    .deploy();
     	    }
     
     
     @Transactional
     public String startProcess(Applicant applicant) {
-    	   repositoryService = processEngine.getRepositoryService();
-    		Deployment deployment = repositoryService.createDeployment()
-    		  .addClasspathResource("processes/loan-application.bpmn20.xml")
-    		  .deploy();
     		
     	Map<String, Object> variables = new HashMap<>();
         //Map each property that will be collected by the form.
        // formEngine.getFormService().
         variables.put("id", applicant.getId());
-        variables.put("applicant", applicant.getAddress());
+        variables.put("name", applicant.getFullName());
         variables.put("age", applicant.getAge());
         variables.put("address", applicant.getAddress());
         variables.put("assets", applicant.getAssets());
@@ -80,8 +94,10 @@ public class ProcessWorkflowService {
 
        //ProcessInstance pi = runtimeService.startProcessInstanceWithForm("loan-application", String outcome, map, String processInstanceName);
        // runtimeService.startProcessInstanceWithForm(processDefinitionId, outcome, variables, processInstanceName)
-        ProcessInstance instance = runtimeService.startProcessInstanceByKey("loan-application", variables);
-        StartFormData formData= formService.getStartFormData(instance.getProcessDefinitionId());
+        ProcessInstance instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
+        System.out.println(instance.getDescription());
+        FormDefinition fd = formRepoService.getFormDefinition("loan-app");
+        FormModel form = (FormModel) formService.getRenderedStartForm(instance.getProcessDefinitionId());
         HistoryService historyService = processEngine.getHistoryService();
         
         return instance.getDescription();

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="applicant-name" name="loan-2-app" isExecutable="true">
+    <dataObject id="isApproved" name="approval" itemSubjectRef="xsd:boolean">
+      <extensionElements>
+        <flowable:value>false</flowable:value>
+      </extensionElements>
+    </dataObject>
+    <startEvent id="start" name="start" flowable:formKey="loan-app"></startEvent>
+    <exclusiveGateway id="isAutoApproved" name="is loan
+auto-approved" default="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99">
+      <documentation>approval</documentation>
+    </exclusiveGateway>
+    <userTask id="manual-review" name="review loan applicant"></userTask>
+    <serviceTask id="sendResult" name="send result" flowable:expression="com.flow.enginehouse.ReviewApplication"></serviceTask>
+    <endEvent id="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" name="end"></endEvent>
+    <serviceTask id="auto-review" name="Assess application" flowable:expression="com.flow.enginehouse.services.PublishArticleService"></serviceTask>
+    <sequenceFlow id="sid-148D8C2A-529A-46EC-9750-B074008C595B" sourceRef="start" targetRef="auto-review"></sequenceFlow>
+    <sequenceFlow id="sid-22AAA1F8-50BA-412E-A5B2-F916C4FA12A6" name="loan decision" sourceRef="manual-review" targetRef="sendResult"></sequenceFlow>
+    <sequenceFlow id="sid-96150063-91BD-4A1D-B84B-8F45527E4C1A" sourceRef="auto-review" targetRef="isAutoApproved"></sequenceFlow>
+    <sequenceFlow id="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99" name="no" sourceRef="isAutoApproved" targetRef="manual-review"></sequenceFlow>
+    <sequenceFlow id="sid-1A1643FE-1291-42E3-933C-01A293BEAB36" name="yes" sourceRef="isAutoApproved" targetRef="sendResult">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approval}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="end-process" sourceRef="sendResult" targetRef="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_applicant-name">
+    <bpmndi:BPMNPlane bpmnElement="applicant-name" id="BPMNPlane_applicant-name">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="30.0" width="30.0" x="0.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="isAutoApproved" id="BPMNShape_isAutoApproved">
+        <omgdc:Bounds height="40.0" width="40.0" x="360.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="manual-review" id="BPMNShape_manual-review">
+        <omgdc:Bounds height="80.0" width="100.0" x="495.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendResult" id="BPMNShape_sendResult">
+        <omgdc:Bounds height="80.0" width="100.0" x="705.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" id="BPMNShape_sid-AE436AF7-1498-40BA-9C24-7C33A87034A5">
+        <omgdc:Bounds height="28.0" width="28.0" x="960.0" y="246.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="auto-review" id="BPMNShape_auto-review">
+        <omgdc:Bounds height="80.0" width="100.0" x="135.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-1A1643FE-1291-42E3-933C-01A293BEAB36" id="BPMNEdge_sid-1A1643FE-1291-42E3-933C-01A293BEAB36">
+        <omgdi:waypoint x="399.4444912797032" y="260.5"></omgdi:waypoint>
+        <omgdi:waypoint x="552.4000244140625" y="260.5"></omgdi:waypoint>
+        <omgdi:waypoint x="552.4000244140625" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="705.0" y="248.76604131231025"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-148D8C2A-529A-46EC-9750-B074008C595B" id="BPMNEdge_sid-148D8C2A-529A-46EC-9750-B074008C595B">
+        <omgdi:waypoint x="29.943663051442627" y="254.55901053359884"></omgdi:waypoint>
+        <omgdi:waypoint x="135.0" y="251.46911764705882"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99" id="BPMNEdge_sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99">
+        <omgdi:waypoint x="380.5" y="240.5"></omgdi:waypoint>
+        <omgdi:waypoint x="380.5" y="55.0"></omgdi:waypoint>
+        <omgdi:waypoint x="495.0" y="55.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-22AAA1F8-50BA-412E-A5B2-F916C4FA12A6" id="BPMNEdge_sid-22AAA1F8-50BA-412E-A5B2-F916C4FA12A6">
+        <omgdi:waypoint x="594.9499999999944" y="55.0"></omgdi:waypoint>
+        <omgdi:waypoint x="755.0" y="55.0"></omgdi:waypoint>
+        <omgdi:waypoint x="755.0" y="210.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="end-process" id="BPMNEdge_end-process">
+        <omgdi:waypoint x="804.949999999924" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="882.5" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="882.5" y="260.0"></omgdi:waypoint>
+        <omgdi:waypoint x="960.0" y="260.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-96150063-91BD-4A1D-B84B-8F45527E4C1A" id="BPMNEdge_sid-96150063-91BD-4A1D-B84B-8F45527E4C1A">
+        <omgdi:waypoint x="234.94999999999916" y="252.56153846153842"></omgdi:waypoint>
+        <omgdi:waypoint x="360.9349098000975" y="259.0243902439024"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

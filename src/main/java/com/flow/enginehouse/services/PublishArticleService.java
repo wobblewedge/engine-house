@@ -7,9 +7,10 @@ import org.flowable.engine.delegate.JavaDelegate;
 
 public class PublishArticleService implements JavaDelegate {
 	
-	private Expression text;
+	private Expression approval;
 	
 	  public void execute(DelegateExecution execution) {
+		  System.out.println(execution.getVariable("credit"));
 	    int credit = (Integer) execution.getVariable("credit");
 	    Boolean approval = credit >= 600 ? true : false;
 	    execution.setVariable("approval", approval);
