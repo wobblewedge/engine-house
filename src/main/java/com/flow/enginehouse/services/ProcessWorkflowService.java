@@ -29,6 +29,7 @@ import org.flowable.form.api.FormRepositoryService;
 import org.flowable.form.engine.FormEngine;
 import org.flowable.form.engine.FormEngines;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,15 +94,15 @@ public class ProcessWorkflowService {
         variables.put("assets", applicant.getAssets());
         variables.put("debts", applicant.getDebts());
         variables.put("credit", applicant.getCredit());
+        
+        instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
 
        //ProcessInstance pi = runtimeService.startProcessInstanceWithForm("loan-application", String outcome, map, String processInstanceName);
-       // runtimeService.startProcessInstanceWithForm(processDefinitionId, outcome, variables, processInstanceName)
-       instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
+       // runtimeService.startProcessInstanceWithForm(processDefinitionId, outcome, variables, processInstanceName
        System.out.println("Number of process definitions : "
                + repositoryService.createProcessDefinitionQuery().count());
        System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
        FormData fd = formService.getStartFormData(instance.getProcessDefinitionId());
-        FormModel form = (FormModel) formService.getRenderedStartForm(instance.getProcessDefinitionId());
         historyService = processEngine.getHistoryService();
         System.out.println("Number of tasks after process start: "
                 + taskService.createTaskQuery().count());
@@ -109,23 +110,33 @@ public class ProcessWorkflowService {
         return instance.getRootProcessInstanceId();
     }
     
-    
+    public StartFormData getForm() {
+    	StartFormData sfd = formService.getStartFormData(instance.getProcessDefinitionId());
+    	return sfd;
+
+    }
     
     //Method used to track time elapsed during activity aspects of process.
-    public void writeHistory() {
-    	
-    
-    	List<HistoricActivityInstance> activities =
-    	          historyService.createHistoricActivityInstanceQuery()
-    	           .processInstanceId(instance.getId())
-    	           .finished()
-    	           .orderByHistoricActivityInstanceEndTime().asc()
-    	           .list();
+    public Map<String,Long> writeHistory() {
+    	Map<String, Long> historyInfo = new HashMap<>();
+    if(historyService.createHistoricActivityInstanceQuery().list().isEmpty()) {
+    	System.out.print("Nothing here yet!");
+    }else {
+    		  List<HistoricActivityInstance> activities =
+  	          historyService.createHistoricActivityInstanceQuery()
+	           .processInstanceId(instance.getProcessInstanceId())
+	           .finished()
+	           .orderByHistoricActivityInstanceEndTime().asc()
+	           .list();
 
-    	        for (HistoricActivityInstance activity : activities) {
-    	          System.out.println(activity.getActivityId() + " took "
-    	            + activity.getDurationInMillis() + " milliseconds");
-    	        }
+	        for (HistoricActivityInstance activity : activities) {
+	        	historyInfo.put(activity.getActivityId(), activity.getDurationInMillis());
+	         
+	        	System.out.println(activity.getActivityId() + " took "
+	            + activity.getDurationInMillis() + " milliseconds");
+	        }
+    	}
+    return historyInfo;
     }
   
     @Transactional
@@ -137,7 +148,13 @@ public class ProcessWorkflowService {
        return task;
        
     }
-  
+
+  @Transactional
+  public Map<String,Object> getInfo() {
+	  Map<String,Object> applicantInfo = new HashMap<String,Object>();
+	  applicantInfo.putAll(instance.getProcessVariables());
+	  return applicantInfo;
+  }
 
     @Transactional
     public void submitReview(Approval approval) {

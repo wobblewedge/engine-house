@@ -1,8 +1,15 @@
 package com.flow.enginehouse.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Applicant {
-	
-	private String id;
+	  @Id
+	  @GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String fullName;
 	private String address;
 	private int age;
@@ -23,7 +30,7 @@ public class Applicant {
 	
 	public Applicant() {}
 
-	public Applicant(String id, String fullName, String address, int age, int income, int debts, int assets,
+	public Applicant(Long id, String fullName, String address, int age, int income, int debts, int assets,
 			int credit) {
 		super();
 		this.id = id;
@@ -93,11 +100,11 @@ public class Applicant {
 		this.credit = credit;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
