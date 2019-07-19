@@ -1,24 +1,45 @@
-package com.flow.enginehouse.model;
+package com.flow.enginehouse.entity;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Applicant {
-	  @Id
+public class Applicant implements Serializable{
+	 
+	private static final long serialVersionUID = 1L;
+	  @Column
 	  @GeneratedValue(strategy = GenerationType.AUTO)
+	  @Id
 	private Long id;
-	private String fullName;
+	 @Column
+	private String name;
+	@Column
 	private String address;
+	 @Column
 	private int age;
+	 @Column
 	private int income;
+	 @Column
 	private int debts;
+	 @Column
 	private int assets;
+	 @Column
 	private int credit;
+	 @Column
 	private boolean approval;
+	 
+	 public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public boolean isApproval() {
 		return approval;
@@ -30,11 +51,9 @@ public class Applicant {
 	
 	public Applicant() {}
 
-	public Applicant(Long id, String fullName, String address, int age, int income, int debts, int assets,
+	public Applicant(String name, String address, int age, int income, int debts, int assets,
 			int credit) {
-		super();
-		this.id = id;
-		this.fullName = fullName;
+		this.name = name;
 		this.address = address;
 		this.age = age;
 		this.income = income;
@@ -44,13 +63,6 @@ public class Applicant {
 		this.approval = false;
 	}
 	
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
 
 	public String getAddress() {
 		return address;

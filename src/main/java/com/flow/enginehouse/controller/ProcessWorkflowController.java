@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.flowable.engine.FormService;
+import org.flowable.engine.form.FormProperty;
 import org.flowable.engine.form.StartFormData;
 import org.flowable.form.api.FormModel;
 import org.flowable.task.api.Task;
@@ -20,10 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flow.enginehouse.model.Applicant;
-import com.flow.enginehouse.model.Approval;
-import com.flow.enginehouse.model.TaskRepresentation;
-import com.flow.enginehouse.services.ProcessWorkflowService;
+import com.flow.enginehouse.entity.Applicant;
+import com.flow.enginehouse.entity.Approval;
+import com.flow.enginehouse.service.ProcessWorkflowService;
 
 @RequestMapping("/loan")
 @RestController
@@ -47,7 +47,7 @@ public List<Task> getTasks(@RequestParam String assignee) {
 }
 
 @GetMapping("/home")
-public StartFormData getForm(ModelMap model) {
+public List<FormProperty> getForm(ModelMap model) {
 	return service.getForm();
 }
 
@@ -62,16 +62,8 @@ public void review(@RequestBody Approval approval) {
 }
 
 @GetMapping("/history")
-public Map<String,Long> history() {
+public Map<String,String> history() {
 return service.writeHistory();
 }
-@RequestMapping(value="/task", method= RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-public List<TaskRepresentation> getTask(@RequestParam String assignee) {
-    List<Task> tasks = service.getTasks(assignee);
-    List<TaskRepresentation> dtos = new ArrayList<TaskRepresentation>();
-    for (Task task : tasks) {
-        dtos.add(new TaskRepresentation(task.getId(), task.getName()));
-    }
-    return dtos;
-	}
 }
+

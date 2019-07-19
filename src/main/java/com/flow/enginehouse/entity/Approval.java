@@ -1,4 +1,4 @@
-package com.flow.enginehouse.model;
+package com.flow.enginehouse.entity;
 
 public class Approval {
 	private boolean status;

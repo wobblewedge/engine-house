@@ -13,7 +13,7 @@
           <flowable:formProperty id="age" name="age" type="long" required="true" readable="true" writable="true" default="42"/>
           <flowable:formProperty id="address" name="address" type="string" required="true" readable="true" writable="true" default=""/>
           <flowable:formProperty id="credit" name="credit" type="enum" required="true" readable="true" writable="true" default=""></flowable:formProperty>
-       </extensionElements>
+	</extensionElements>
      </startEvent>
     <exclusiveGateway id="isAutoApproved" name="is loan
 auto-approved" default="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99">
