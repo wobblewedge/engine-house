@@ -2,6 +2,8 @@ package com.flow.enginehouse.service;
 
 import java.util.Map;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.flowable.common.engine.api.delegate.Expression;
 import org.flowable.common.engine.api.variable.VariableContainer;
 import org.flowable.engine.delegate.DelegateExecution;
@@ -25,8 +27,14 @@ public class SendMailService implements JavaDelegate {
         
         boolean approval = credit >= 600 ? true : false;
         Long id = (Long)execution.getVariable("id");
+        System.out.println(id);
+        try {
         Applicant applicant = applicantRepo.getOne(id);
-        execution.setVariable("approvale", approval);
+        execution.setVariable("approval", approval);
         applicant.setApproval(approval);
+        applicantRepo.save(applicant);
+        }catch(EntityNotFoundException e) {
+        	System.out.println("Likely story");
+        }
     }
 }
