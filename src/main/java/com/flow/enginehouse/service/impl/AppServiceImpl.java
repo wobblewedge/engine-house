@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.trace.http.HttpTrace.Response;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.flow.enginehouse.converter.ApplicantConverter;
 import com.flow.enginehouse.dto.ApplicantDto;
+import com.flow.enginehouse.entity.Applicant;
 import com.flow.enginehouse.entity.ApplicantRepository;
 import com.flow.enginehouse.service.AppService;
 
@@ -20,8 +23,13 @@ public class AppServiceImpl implements AppService {
 	ApplicantRepository applicantRepo;
 
 	@Override
-	public void saveUser(ApplicantDto applicantDto) {
-		applicantRepo.save(ApplicantConverter.dtoToEntity(applicantDto));
+	public Applicant saveUser(ApplicantDto applicantDto) {
+		if(applicantDto==null) {
+			throw new ResourceNotFoundException("Empty Request Body Not Allowed");
+		}else {
+		Applicant applicant = applicantRepo.save(ApplicantConverter.dtoToEntity(applicantDto));
+		return applicant;
+		}
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 'use strict'
 
 var module = angular.module('demo.controllers', []);
-module.controller("AppController", [ "$scope", "AppService",
+module.controller("ApplicantController", [ "$scope", "AppService",
 		function($scope, AppService) {
 
 			$scope.applicantDto = {

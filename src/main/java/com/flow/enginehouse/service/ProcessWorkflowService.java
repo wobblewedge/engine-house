@@ -16,6 +16,7 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.app.AppModel;
+import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.form.FormData;
 import org.flowable.engine.form.FormProperty;
 import org.flowable.engine.form.StartFormData;
@@ -98,18 +99,9 @@ public class ProcessWorkflowService {
 		variables.put("credit", applicant.getCredit());
 
 		instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
-		// ProcessInstance pi =
-		// runtimeService.startProcessInstanceWithForm("loan-application", String
-		// outcome, map, String processInstanceName);
-		// runtimeService.startProcessInstanceWithForm(processDefinitionId, outcome,
-		// variables, processInstanceName
-		System.out
-				.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
+		System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
 		System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
-		FormData fd = formService.getStartFormData(instance.getProcessDefinitionId());
-		historyService = processEngine.getHistoryService();
 		System.out.println("Number of tasks after process start: " + taskService.createTaskQuery().count());
-		fd.getFormProperties();
 		report.put(instance.getRootProcessInstanceId(), instance.getProcessDefinitionKey());
 		return instance.getRootProcessInstanceId();
 	}
