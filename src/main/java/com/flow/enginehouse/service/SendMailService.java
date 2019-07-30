@@ -5,19 +5,14 @@ import java.util.Map;
 import javax.persistence.EntityNotFoundException;
 
 import org.flowable.common.engine.api.delegate.Expression;
-import org.flowable.common.engine.api.variable.VariableContainer;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
-import org.flowable.engine.impl.delegate.ActivityBehavior;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.flow.enginehouse.entity.Applicant;
 import com.flow.enginehouse.entity.ApplicantRepository;
 
 public class SendMailService implements JavaDelegate {
-	@Autowired 
-	ApplicantRepository applicantRepo;
-	
+
 	private Expression message;
 	@Override
     public void execute(DelegateExecution execution) {
@@ -27,12 +22,9 @@ public class SendMailService implements JavaDelegate {
         
         boolean approval = credit >= 600 ? true : false;
         Long id = (Long)execution.getVariable("id");
-        System.out.println(id);
+        System.out.println("Final Approval: "+ approval);
         try {
-        Applicant applicant = applicantRepo.getOne(id);
         execution.setVariable("approval", approval);
-        applicant.setApproval(approval);
-        applicantRepo.save(applicant);
         }catch(EntityNotFoundException e) {
         	System.out.println("Likely story");
         }
