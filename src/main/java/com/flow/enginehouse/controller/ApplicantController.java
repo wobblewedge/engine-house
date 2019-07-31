@@ -20,9 +20,7 @@ import com.flow.enginehouse.entity.ApplicantRepository;
 import com.flow.enginehouse.service.AppService;
 import com.flow.enginehouse.service.ProcessWorkflowService;
 import com.flow.enginehouse.service.SendMailService;
-/**
- * Created by ashish on 13/5/17.
- */
+
 @RequestMapping("/applicants")
 @RestController
 public class ApplicantController {
