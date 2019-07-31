@@ -14,9 +14,7 @@ import com.flow.enginehouse.entity.Applicant;
 import com.flow.enginehouse.entity.ApplicantRepository;
 import com.flow.enginehouse.service.AppService;
 
-/**
- * Created by ashish on 13/5/17.
- */
+
 @Service
 public class AppServiceImpl implements AppService {
 	@Autowired
@@ -27,10 +25,12 @@ public class AppServiceImpl implements AppService {
 		if(applicantDto==null) {
 			throw new ResourceNotFoundException("Empty Request Body Not Allowed");
 		}else {
-		Applicant applicant = applicantRepo.save(ApplicantConverter.dtoToEntity(applicantDto));
+		Applicant applicant = applicantRepo.saveAndFlush(ApplicantConverter.dtoToEntity(applicantDto));
 		return applicant;
 		}
 	}
+	
+
 
 	@Override
 	public List<ApplicantDto> getAllUsers() {

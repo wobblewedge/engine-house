@@ -85,7 +85,7 @@ public class ProcessWorkflowService {
 	}
 
 	@Transactional
-	public String startProcess(Applicant applicant) {
+	public Map<String,Object> startProcess(Applicant applicant) {
 		Map<String, Object> report = new HashMap<>();
 		Map<String, Object> variables = new HashMap<>();
 		// Map each property that will be collected by the form.
@@ -97,13 +97,29 @@ public class ProcessWorkflowService {
 		variables.put("assets", applicant.getAssets());
 		variables.put("debts", applicant.getDebts());
 		variables.put("credit", applicant.getCredit());
-
+		variables.put("id", applicant.getId());
 		instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
 		System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
 		System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
 		System.out.println("Number of tasks after process start: " + taskService.createTaskQuery().count());
 		report.put(instance.getRootProcessInstanceId(), instance.getProcessDefinitionKey());
-		return instance.getRootProcessInstanceId();
+		return report;
+	}
+	
+	@Transactional
+	public void updateApproval(long id, boolean approval) {
+		Applicant applicant = new Applicant();
+		applicant = applicantRepo.getOne(id);
+		applicant.setApproval(approval);
+		applicantRepo.saveAndFlush(applicant);
+	}
+	
+	
+	public boolean getFinalStatus(String processInstanceId) {
+		Map<String,Object> variables = instance.getProcessVariables();
+		
+		boolean approval = (boolean) variables.get("approval");
+		return approval;
 	}
 
 	public List<FormProperty> getForm() {

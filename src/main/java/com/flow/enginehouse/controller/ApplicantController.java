@@ -19,7 +19,7 @@ import com.flow.enginehouse.entity.Applicant;
 import com.flow.enginehouse.entity.ApplicantRepository;
 import com.flow.enginehouse.service.AppService;
 import com.flow.enginehouse.service.ProcessWorkflowService;
-
+import com.flow.enginehouse.service.SendMailService;
 /**
  * Created by ashish on 13/5/17.
  */
@@ -48,11 +48,12 @@ public class ApplicantController {
 		Map<String,Object> details = new HashMap();
 		Applicant applicant= appService.saveUser(applicantDto);
 		service.manageDeployment();
-		String processId = service.startProcess(applicant);
+		details.putAll(service.startProcess(applicant));
 		String applicantId = applicant.getId().toString();
 	    applicant = applicantRepo.getOne(Long.valueOf(applicantId));
-	    
-	    details.put("Process Id: ", processId);
+	    applicant.setApproval(SendMailService.approval);
+	    applicant.setId(SendMailService.id);
+	    applicantRepo.saveAndFlush(applicant);
 	    details.put("Applicant Id: ", applicantId);
 	    details.put("Applicant Info:" , applicant);
 	    return details;

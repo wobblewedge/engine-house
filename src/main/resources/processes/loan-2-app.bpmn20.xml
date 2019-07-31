@@ -35,6 +35,8 @@
 			itemSubjectRef="xsd:int" />
 		<dataObject id="dObj8" name="address"
 			itemSubjectRef="xsd:string" />
+		<dataObject id="dObj9" name="id"
+			itemSubjectRef="xsd:string" />
 		<startEvent id="start" flowable:formKey="loan-app"
 			name="start">
 			<outgoing>sid-96150063-91BD-4A1D-B84B-8F45527E4C1A</outgoing>
