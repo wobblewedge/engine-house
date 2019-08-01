@@ -1,14 +1,11 @@
 package com.flow.enginehouse.service;
 
 import java.util.List;
-
-import org.springframework.boot.actuate.trace.http.HttpTrace.Response;
-
+import java.util.Map;
 import com.flow.enginehouse.dto.ApplicantDto;
-import com.flow.enginehouse.entity.Applicant;
 
 public interface AppService {
     ApplicantDto getApplicantById(Long id);
-    Applicant saveUser(ApplicantDto appDto);
+    Map<String,Object> saveUser(ApplicantDto appDto);
     List<ApplicantDto> getAllUsers();
 }

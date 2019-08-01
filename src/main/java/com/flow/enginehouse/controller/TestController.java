@@ -35,26 +35,6 @@ public class TestController {
     private RepositoryService repositoryService;
     @Autowired
     private ProcessEngine processEngine;
-
-/***************此处为业务代码******************/
-    /**
-     * 添加报销
-     *
-     * @param userId    用户Id
-     * @param money     报销金额
-     * @param descption 描述
-     */
-    @RequestMapping(value = "add")
-    @ResponseBody
-    public String addExpense(String userId, Integer money, String descption) {
-        //启动流程
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("taskUser", userId);
-        map.put("money", money);
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Expense", map);
-        return "提交成功.流程Id为：" + processInstance.getId();
-    }
-
     /**
      * 获取审批管理列表
      */

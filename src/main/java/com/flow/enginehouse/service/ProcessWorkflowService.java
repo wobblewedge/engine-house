@@ -3,49 +3,24 @@ package com.flow.enginehouse.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.apache.ibatis.annotations.Param;
 import org.flowable.engine.FormService;
 import org.flowable.engine.HistoryService;
-import org.flowable.engine.IdentityService;
-import org.flowable.engine.ProcessEngine;
-import org.flowable.engine.ProcessEngineConfiguration;
-import org.flowable.engine.ProcessEngines;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
-import org.flowable.engine.app.AppModel;
-import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.form.FormData;
 import org.flowable.engine.form.FormProperty;
-import org.flowable.engine.form.StartFormData;
 import org.flowable.engine.history.HistoricActivityInstance;
-import org.flowable.engine.repository.Deployment;
-import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
-import org.flowable.form.api.FormDefinition;
-import org.flowable.form.api.FormModel;
 import org.flowable.form.api.FormRepositoryService;
-import org.flowable.form.engine.FormEngine;
-import org.flowable.form.engine.FormEngines;
 import org.flowable.task.api.Task;
-import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.flow.enginehouse.entity.Applicant;
 import com.flow.enginehouse.entity.ApplicantRepository;
-import com.flow.enginehouse.entity.Approval;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.BufferedInputStream;
 import java.util.ArrayList;
 
 @Service
@@ -58,13 +33,9 @@ public class ProcessWorkflowService {
 	@Autowired
 	private RepositoryService repositoryService;
 	@Autowired
-	private ProcessEngine processEngine;
-	@Autowired
 	private FormService formService;
 	@Autowired
 	private FormRepositoryService formRepoService;
-	@Autowired
-	private FormEngine formEngine;
 	@Autowired
 	HistoryService historyService;
 	@Autowired
@@ -79,7 +50,7 @@ public class ProcessWorkflowService {
 		String formPath = "forms/loan-app.form";
 		String processPath = "processes/loan-2-app.bpmn20.xml";
 		// deploy process repository
-		Deployment deployment = repositoryService.createDeployment().addClasspathResource(processPath).deploy();
+		repositoryService.createDeployment().addClasspathResource(processPath).deploy();
 		// deploy form repository
 		formRepoService.createDeployment().addClasspathResource(formPath).deploy();
 	}
@@ -102,16 +73,15 @@ public class ProcessWorkflowService {
 		System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
 		System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
 		System.out.println("Number of tasks after process start: " + taskService.createTaskQuery().count());
-		report.put(instance.getRootProcessInstanceId(), instance.getProcessDefinitionKey());
+		report.put("Process Instance ID: ",instance.getRootProcessInstanceId());
 		return report;
 	}
 	
 	@Transactional
-	public void updateApproval(long id, boolean approval) {
-		Applicant applicant = new Applicant();
-		applicant = applicantRepo.getOne(id);
-		applicant.setApproval(approval);
-		applicantRepo.saveAndFlush(applicant);
+	public void updateApproval(Applicant applicant) {
+	    applicant.setApproval(DecisionService.approval);
+	    applicant.setId(DecisionService.id);
+	    applicantRepo.saveAndFlush(applicant);
 	}
 	
 	
@@ -128,7 +98,6 @@ public class ProcessWorkflowService {
 
 	}
 
-	// Method used to track time elapsed during activity aspects of process.
 	public Map<String, String> writeHistory() {
 		if (historyService.createHistoricActivityInstanceQuery().list().isEmpty()) {
 			System.out.print("Nothing here yet!");
@@ -151,7 +120,6 @@ public class ProcessWorkflowService {
 	public List<Task> getTasks(String assignee) {
 		List<Task> task = taskService.createTaskQuery().taskAssignee(assignee).list();
 		return task;
-
 	}
 
 	@Transactional
@@ -166,13 +134,6 @@ public class ProcessWorkflowService {
 			applicantInfo.put(execution.getName(), execution.getProcessInstanceId());
 		}
 		return applicantInfo;
-	}
-
-	@Transactional
-	public void submitReview(Approval approval) {
-		Map<String, Object> variables = new HashMap<String, Object>();
-		variables.put("approved", approval.getStatus());
-		taskService.complete(approval.getId(), variables);
 	}
 
 }

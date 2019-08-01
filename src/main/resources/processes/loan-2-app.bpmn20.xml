@@ -54,7 +54,7 @@
 			<incoming>end-process</incoming>
 		</endEvent>
 		<serviceTask id="sendResult" name="send result"
-			flowable:class="com.flow.enginehouse.service.SendMailService">
+			flowable:class="com.flow.enginehouse.service.DecisionService">
 			<extensionElements>
 				<flowable:field name="message">
 					<flowable:expression>Hello ${name}, your approval rating is as
