@@ -86,8 +86,9 @@ public class ProcessWorkflowService {
 //	}
 	
 	@Transactional
-	public void updateApproval(ApplicationProcess application, Applicant applicant) {
-	    application.setLoanDecision(DecisionService.approval);
+	public void updateApproval(Applicant applicant, String processInstanceId) {
+	    ApplicationProcess application = applicant.getApplications().add(new ApplicationProcess(processInstanceId));
+	    .setLoanDecision(DecisionService.approval);
 	    applicant.setUserId(DecisionService.id);
 	    application.setApr(DecisionService.apr);
 	    applicantRepo.saveAndFlush(applicant);

@@ -34,10 +34,9 @@ public class Applicant implements Serializable {
 	private Integer age;
 	@Column
 	private Integer income;
-	/*
-	 * @OneToMany(
-	 *
-			cascade = CascadeType.ALL,
+	
+	 @OneToMany(
+				cascade = CascadeType.ALL,
 			orphanRemoval=true)
 	@JoinColumn(name="userId")
 	private List<ApplicationProcess> applications = new ArrayList<>();
@@ -49,7 +48,7 @@ public class Applicant implements Serializable {
 	public void setApplications(List<ApplicationProcess> applications) {
 		this.applications = applications;
 	}
-	*/
+	
 	public Long getUserId() {
 		return userId;
 	}
