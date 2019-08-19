@@ -2,7 +2,7 @@
 
 Endpoints found at com.flow.enginehouse.util.Constants
 
-Accepts a json object in the form of ApplicantDto :
+Accepts a json object in the form of ApplicantDto: POST http://localhost:8080/api/bpm/loanApproval/process/startProcess
 
 {
 	"firstName": "first",
