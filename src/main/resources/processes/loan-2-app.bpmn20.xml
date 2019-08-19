@@ -25,9 +25,9 @@
 			</extensionElements>
 		</dataObject>
 		<dataObject id="dObj2" name="age" itemSubjectRef="xsd:int" />
-		<dataObject id="dObj3" name="debts"
+		<dataObject id="dObj3" name="ssn"
 			itemSubjectRef="xsd:int" />
-		<dataObject id="dObj4" name="assets"
+		<dataObject id="dObj4" name="loan amount"
 			itemSubjectRef="xsd:int" />
 		<dataObject id="dObj5" name="income"
 			itemSubjectRef="xsd:int" />

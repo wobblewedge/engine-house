@@ -6,26 +6,30 @@ import org.flowable.common.engine.api.delegate.Expression;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.flow.enginehouse.util.Constants;
 
 public class DecisionService implements JavaDelegate {
 	@Autowired
 	ProcessWorkflowService service;
 	
-	public static boolean approval;
+	public static String approval;
 	public static Long id;
+	public static int apr;
 	
-	//In xml, this is the flowable:expression with embedded variables. Can alter them here.
 	private Expression message;
 	@Override
     public void execute(DelegateExecution execution) {
         int credit = (Integer)execution.getVariable("credit");
+        int income = (Integer)execution.getVariable("income");
         id = (Long) execution.getVariable("id");
-        approval = credit >= 600 ? true : false;
+        approval = credit >= 640 ? Constants.LOAN_APPROVED: Constants.LOAN_PROGRESS;
+        apr = income > 100000 ? 6 : 15;
         try {
         execution.setVariable("approval", approval, false);
+        execution.setVariable("apr", apr, false);
         }catch(EntityNotFoundException e) {
         	System.out.println("Entity Not Found");
         }
     }
 	
-}
+};

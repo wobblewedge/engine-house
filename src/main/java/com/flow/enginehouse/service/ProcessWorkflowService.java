@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.flow.enginehouse.entity.Applicant;
 import com.flow.enginehouse.entity.ApplicantRepository;
+import com.flow.enginehouse.entity.ApplicationProcess;
+
 import java.util.ArrayList;
 
 @Service
@@ -56,31 +58,34 @@ public class ProcessWorkflowService {
 	}
 
 	@Transactional
-	public Map<String,Object> startProcess(Applicant applicant) {
+	public ProcessInstance startProcess(Applicant applicant) {
 		Map<String, Object> report = new HashMap<>();
 		Map<String, Object> variables = new HashMap<>();
 		// Map each property that will be collected by the form.
 		// formEngine.getFormService().
-		variables.put("id", applicant.getId());
-		variables.put("name", applicant.getName());
+		variables.put("id", applicant.getUserId());
+		variables.put("first name", applicant.getFirstName());
+		variables.put("last name", applicant.getLastName());
 		variables.put("age", applicant.getAge());
 		variables.put("address", applicant.getAddress());
-		variables.put("assets", applicant.getAssets());
-		variables.put("debts", applicant.getDebts());
-		variables.put("credit", applicant.getCredit());
-		variables.put("id", applicant.getId());
+		variables.put("loan amount", applicant.getLoanAmount());
+		variables.put("ssn", applicant.getSSN());
+		variables.put("credit", applicant.getCreditScore());
+		variables.put("id", applicant.getUserId());
 		instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
+		
 		System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
 		System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
 		System.out.println("Number of tasks after process start: " + taskService.createTaskQuery().count());
 		report.put("Process Instance ID: ",instance.getRootProcessInstanceId());
-		return report;
+		return instance;
 	}
 	
 	@Transactional
-	public void updateApproval(Applicant applicant) {
-	    applicant.setApproval(DecisionService.approval);
-	    applicant.setId(DecisionService.id);
+	public void updateApproval(ApplicationProcess application, Applicant applicant) {
+	    application.setLoanDecision(DecisionService.approval);
+	    applicant.setUserId(DecisionService.id);
+	    application.setApr(DecisionService.apr);
 	    applicantRepo.saveAndFlush(applicant);
 	}
 	

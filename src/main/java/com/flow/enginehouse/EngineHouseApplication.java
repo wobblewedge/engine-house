@@ -33,7 +33,7 @@ public class EngineHouseApplication {
 	@PostConstruct
 	public void setupDbWithData(){
 		//revisit
-		Applicant applicant= new Applicant("Mick Robbins", "100 Wynview Drive", 27, 1000000, 60000, 10000, 700);
+		Applicant applicant= new Applicant("Mick","Robbins", 122456655, 56, 76000,200000,690,"mick.robbins@gmail.com", "75 Yankee Lane");
 		//applicant.setSkills(Arrays.asList(new Skill("java"), new Skill("js")));
 		applicant= applicantRepo.save(applicant);
 	}

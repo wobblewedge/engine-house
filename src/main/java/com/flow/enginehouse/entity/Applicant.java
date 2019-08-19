@@ -1,68 +1,120 @@
 package com.flow.enginehouse.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Applicant implements Serializable{
-	 
+public class Applicant implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	  @Column
-	  @GeneratedValue(strategy = GenerationType.AUTO)
-	  @Id
-	private Long id;
-	 @Column
-	private String name;
+	
 	@Column
-	private String address;
-	 @Column
-	private int age;
-	 @Column
-	private int income;
-	 @Column
-	private int debts;
-	 @Column
-	private int assets;
-	 @Column
-	private int credit;
-	 @Column
-	private boolean approval;
-	 
-	 public String getName() {
-		return name;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	private Long userId;
+	@Column
+	private String firstName;
+	@Column
+	private String lastName;
+	@Column
+	private Integer SSN;
+	@Column
+	private Integer age;
+	@Column
+	private Integer income;
+	@OneToMany(
+			cascade = CascadeType.ALL,
+			orphanRemoval=true)
+	private List<ApplicationProcess> applications = new ArrayList<>();
+
+	public List<ApplicationProcess> getApplications() {
+		return applications;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public boolean isApproval() {
-		return approval;
+	public void setApplications(List<ApplicationProcess> applications) {
+		this.applications = applications;
 	}
 
-	public void setApproval(boolean approval) {
-		this.approval = approval;
+	public Long getUserId() {
+		return userId;
 	}
-	
-	public Applicant() {}
 
-	public Applicant(String name, String address, int age, int income, int debts, int assets,
-			int credit) {
-		this.name = name;
-		this.address = address;
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Integer getSSN() {
+		return SSN;
+	}
+
+	public void setSSN(Integer sSN) {
+		SSN = sSN;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
 		this.age = age;
-		this.income = income;
-		this.debts = debts;
-		this.assets = assets;
-		this.credit = credit;
-		this.approval = false;
 	}
-	
+
+	public Integer getIncome() {
+		return income;
+	}
+
+	public void setIncome(Integer income) {
+		this.income = income;
+	}
+
+	public Integer getLoanAmount() {
+		return loanAmount;
+	}
+
+	public void setLoanAmount(Integer loanAmount) {
+		this.loanAmount = loanAmount;
+	}
+
+	public Integer getCreditScore() {
+		return creditScore;
+	}
+
+	public void setCreditScore(Integer creditScore) {
+		this.creditScore = creditScore;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getAddress() {
 		return address;
@@ -72,52 +124,32 @@ public class Applicant implements Serializable{
 		this.address = address;
 	}
 
-	public int getAge() {
-		return age;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+	@Column
+	private Integer loanAmount;
+	@Column
+	private Integer creditScore;
+	@Column
+	private String email;
+@Column
+private String address;
 
-	public int getIncome() {
-		return income;
-	}
+public Applicant() {}
 
-	public void setIncome(int income) {
-		this.income = income;
-	}
-
-	public int getDebts() {
-		return debts;
-	}
-
-	public void setDebts(int debts) {
-		this.debts = debts;
-	}
-
-	public int getAssets() {
-		return assets;
-	}
-
-	public void setAssets(int assets) {
-		this.assets = assets;
-	}
-
-	public int getCredit() {
-		return credit;
-	}
-
-	public void setCredit(int credit) {
-		this.credit = credit;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+public Applicant(String firstName, String lastName, Integer SSN, Integer age, Integer income, Integer loanAmount,
+		Integer creditScore, String email, String address) {
+	super();
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.SSN = SSN;
+	this.age = age;
+	this.income = income;
+	this.loanAmount = loanAmount;
+	this.creditScore = creditScore;
+	this.email = email;
+	this.address = address;
+}
 }

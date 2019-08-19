@@ -7,13 +7,13 @@ import com.flow.enginehouse.entity.Applicant;
 
 public class ApplicantConverter {
 	public static Applicant dtoToEntity(ApplicantDto appDto) {
-		Applicant applicant = new Applicant(appDto.getName(), appDto.getAddress(), appDto.getAge(), appDto.getIncome(), appDto.getAssets(), appDto.getDebts(), appDto.getCredit());
-		applicant.setId(appDto.getId());
+		Applicant applicant = new Applicant(appDto.getFirstName(), appDto.getLastName(), appDto.getSSN(),appDto.getAge(), appDto.getIncome(), appDto.getLoanAmount(), appDto.getCreditScore(), appDto.getEmail(), appDto.getAddress());
+		applicant.setUserId(appDto.getUserId());
 		return applicant;
 	}
 
 	public static ApplicantDto entityToDto(Applicant applicant) {
-		ApplicantDto applicantDto = new ApplicantDto(applicant.getId(), applicant.getName(), applicant.getAddress(), applicant.getAge(), applicant.getIncome(), applicant.getAssets(), applicant.getDebts(), applicant.getCredit());
+		ApplicantDto applicantDto = new ApplicantDto(applicant.getFirstName(), applicant.getLastName(), applicant.getSSN(), applicant.getAge(), applicant.getIncome(), applicant.getLoanAmount(), applicant.getCreditScore(), applicant.getEmail(), applicant.getAddress());
 		return applicantDto;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -30,17 +31,19 @@ public class AppServiceImpl implements AppService {
 		if(applicantDto==null) {
 			throw new ResourceNotFoundException("Empty Request Body Not Allowed");
 		}else {
-		Applicant applicant = applicantRepo.saveAndFlush(ApplicantConverter.dtoToEntity(applicantDto));
+		Applicant applicant = applicantRepo.save(ApplicantConverter.dtoToEntity(applicantDto));
 		service.manageDeployment();
-		details.putAll(service.startProcess(applicant));
-		String applicantId = applicant.getId().toString();
+		ProcessInstance instance = service.startProcess(applicant);
+		Map<String,Object> vars = new HashMap<>(instance.getProcessVariables());
+		String applicantId = applicant.getUserId().toString();
 	    applicant = applicantRepo.getOne(Long.valueOf(applicantId));
-	    service.updateApproval(applicant);
+	    service.updateApproval(null, applicant);
 	    details.put("Applicant Info:" , applicant);
 		return details;
 		}
 	}
 	
+	//NEED TO DO
 
 
 	@Override

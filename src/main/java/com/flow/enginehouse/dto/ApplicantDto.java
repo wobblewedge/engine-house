@@ -1,105 +1,88 @@
 package com.flow.enginehouse.dto;
 
 public class ApplicantDto {
-
-	    public String getName() {
-		return name;
+	
+	public String getFirstName() {
+		return firstName;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public Integer getSSN() {
+		return SSN;
+	}
+	public void setSSN(Integer sSN) {
+		SSN = sSN;
+	}
 	public Integer getAge() {
 		return age;
 	}
-
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-
 	public Integer getIncome() {
 		return income;
 	}
-
 	public void setIncome(Integer income) {
 		this.income = income;
 	}
-
-	public Integer getDebts() {
-		return debts;
+	public Integer getLoanAmount() {
+		return loanAmount;
 	}
-
-	public void setDebts(Integer debts) {
-		this.debts = debts;
+	public void setLoanAmount(Integer loanAmount) {
+		this.loanAmount = loanAmount;
 	}
-
-	public Integer getAssets() {
-		return assets;
+	public Integer getCreditScore() {
+		return creditScore;
 	}
-
-	public void setAssets(Integer assets) {
-		this.assets = assets;
+	public void setCreditScore(Integer creditScore) {
+		this.creditScore = creditScore;
 	}
-
-	public Integer getCredit() {
-		return credit;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setCredit(Integer credit) {
-		this.credit = credit;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	public boolean isApproval() {
-		return approval;
+	String firstName;
+	String lastName;
+	Long userId;
+	Integer SSN;
+	String address;
+	Integer age;
+	Integer income;
+	Integer loanAmount;
+	Integer creditScore;
+	String email;
+	public ApplicantDto() {};
+	public ApplicantDto(String firstName, String lastName, Integer SSN, Integer age, Integer income,
+			Integer loanAmount, Integer creditScore, String email,String address) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.SSN = SSN;
+		this.age = age;
+		this.income = income;
+		this.loanAmount = loanAmount;
+		this.creditScore = creditScore;
+		this.email = email;
+		this.address = address;
 	}
-
-	public void setApproval(boolean approval) {
-		this.approval = approval;
-	}
-
-		Long id;
-	    public Long getId() {
-			return id;
-		}
-
-		public void setId(Long id) {
-			this.id = id;
-		}
-
-		String name;
-	    Integer age;
-	    Integer income;
-	    Integer debts;
-	    Integer assets;
-	    Integer credit;
-	    String address;
-		boolean approval;
-
-		public ApplicantDto(Long id, String name, String address, Integer age, Integer income, Integer debts, Integer assets,
-				Integer credit) {
-			this.id=id;
-			this.name = name;
-			this.address = address;
-			this.age = age;
-			this.income = income;
-			this.debts = debts;
-			this.assets = assets;
-			this.credit = credit;
-			this.approval = false;
-		}
-
-	    public ApplicantDto() {
-	    }
-
-	}
-
-
+}
