@@ -12,7 +12,6 @@ public class ApplicationProcess {
 @Column
 @Id
 private String processId;
-@OneToMany
 @Column
 private String loanDecision;
 @Column

@@ -14,6 +14,7 @@ import com.flow.enginehouse.converter.ApplicantConverter;
 import com.flow.enginehouse.dto.ApplicantDto;
 import com.flow.enginehouse.entity.Applicant;
 import com.flow.enginehouse.entity.ApplicantRepository;
+import com.flow.enginehouse.entity.ApplicationProcess;
 import com.flow.enginehouse.service.AppService;
 import com.flow.enginehouse.service.ProcessWorkflowService;
 
@@ -34,6 +35,7 @@ public class AppServiceImpl implements AppService {
 		Applicant applicant = applicantRepo.save(ApplicantConverter.dtoToEntity(applicantDto));
 		service.manageDeployment();
 		ProcessInstance instance = service.startProcess(applicant);
+		//applicant.getApplications().add(new ApplicationProcess(instance.getProcessInstanceId()));
 		Map<String,Object> vars = new HashMap<>(instance.getProcessVariables());
 		String applicantId = applicant.getUserId().toString();
 	    applicant = applicantRepo.getOne(Long.valueOf(applicantId));

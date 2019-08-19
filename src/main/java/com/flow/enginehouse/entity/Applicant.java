@@ -10,7 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import org.springframework.lang.Nullable;
 
 @Entity
 public class Applicant implements Serializable {
@@ -31,9 +34,12 @@ public class Applicant implements Serializable {
 	private Integer age;
 	@Column
 	private Integer income;
-	@OneToMany(
+	/*
+	 * @OneToMany(
+	 *
 			cascade = CascadeType.ALL,
 			orphanRemoval=true)
+	@JoinColumn(name="userId")
 	private List<ApplicationProcess> applications = new ArrayList<>();
 
 	public List<ApplicationProcess> getApplications() {
@@ -43,7 +49,7 @@ public class Applicant implements Serializable {
 	public void setApplications(List<ApplicationProcess> applications) {
 		this.applications = applications;
 	}
-
+	*/
 	public Long getUserId() {
 		return userId;
 	}
