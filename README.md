@@ -1,18 +1,20 @@
 ~~~Loan App Engine using Spring Boot, Flowable, JPA~~~
 
-POST new application to "/applicants/save" in the shape of a json object containing:
+Endpoints found at com.flow.enginehouse.util.Constants
+
+Accepts a json object in the form of ApplicantDto :
 
 	{
-	"name": "Adam Wagerman",
-	"address": "1 Massive Mansion",
-	"age": 49,
-	"debts": 1000,
-	"assets": 30,
-	"income": 30500,
-	"credit": 800
+	firstName: "first",
+	lastName:  "last",
+	userId:	   0,
+	SSN:	   013549999,
+	address:   "1 Raspberry Lane",
+	age:	   55,
+	income:	   44000,
+	loanAmount: 19000,
+	creditScore: 900,
+	email:	"bob@bob.com"
 	}
-
-The applicant is used to start a simple flowable process that will determine the applicants eligibility using the credit score as a basis. Once the process concludes, the response returns with a few new properties tacked on:
-	ID - the index in the db
-	Approval - boolean representing the loan decision
-	Process ID - Each deployment of a process definition (in this case, our process definition is "processes/loan-2-app.bpmn20.xml") is known as a process instance. Each instance is given a unique Id, which is listed here.
+	
+	And uses that to start a process which invokes java code that decides upon the initial status of a loan.
