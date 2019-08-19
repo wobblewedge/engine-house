@@ -37,7 +37,6 @@ public class AppServiceImpl implements AppService {
 		Map<String,Object> vars = new HashMap<>(instance.getProcessVariables());
 		String applicantId = applicant.getUserId().toString();
 	    applicant = applicantRepo.getOne(Long.valueOf(applicantId));
-	    service.updateApproval(null, applicant);
 	    details.put("Applicant Info:" , applicant);
 		return details;
 		}

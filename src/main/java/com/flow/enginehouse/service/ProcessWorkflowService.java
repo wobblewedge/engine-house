@@ -81,6 +81,10 @@ public class ProcessWorkflowService {
 		return instance;
 	}
 	
+//	@Transactional
+//	public ApplicationProcess getInstanceVariables(ProcessInstance instance) {		
+//	}
+	
 	@Transactional
 	public void updateApproval(ApplicationProcess application, Applicant applicant) {
 	    application.setLoanDecision(DecisionService.approval);

@@ -10,7 +10,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class ApplicationProcess {
 @Column
-@GeneratedValue(strategy = GenerationType.AUTO)
 @Id
 private String processId;
 @OneToMany
@@ -27,6 +26,17 @@ private String loanDecisionDate;
 @Column
 private String comments;
 
+public ApplicationProcess(String processId, String loanDecision, double apr, String taskId, String loanDecisionBy,
+		String loanDecisionDate, String comments) {
+	super();
+	this.processId = processId;
+	this.loanDecision = loanDecision;
+	this.apr = apr;
+	this.taskId = taskId;
+	this.loanDecisionBy = loanDecisionBy;
+	this.loanDecisionDate = loanDecisionDate;
+	this.comments = comments;
+}
 public ApplicationProcess() {}
 public ApplicationProcess(String processId) {
 	this.processId = processId;

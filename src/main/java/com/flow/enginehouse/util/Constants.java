@@ -1,6 +1,8 @@
 package com.flow.enginehouse.util;
 
 public interface Constants {
+	
+	//Endpoints
 	static final String GET_APPLICANT_BY_ID = "/get/{id}";
 	static final String GET_ALL_USERS = "/getAll";
 	static final String SAVE_USER = "/save";
@@ -9,6 +11,8 @@ public interface Constants {
 	static final String RETRIEVE_TAKS = "/task/retrieveTasks";
 	static final String RETRIEVE_PROCESSES = "/retrieveProcesses/{id}";
 	static final String COMPLETE_TASK = "/task/completeTask";
+	
+	//Loan Possibilities
 	static final String LOAN_APPROVED = "APPROVED";
 	static final String LOAN_REJECTED = "REJECTED";
 	static final String LOAN_PROGRESS = "IN_PROGRESS";

@@ -22,8 +22,8 @@ public class DecisionService implements JavaDelegate {
         int credit = (Integer)execution.getVariable("credit");
         int income = (Integer)execution.getVariable("income");
         id = (Long) execution.getVariable("id");
-        approval = credit >= 640 ? Constants.LOAN_APPROVED: Constants.LOAN_PROGRESS;
-        apr = income > 100000 ? 6 : 15;
+        approval = credit >= 750 ? Constants.LOAN_APPROVED: credit >= 640 ? Constants.LOAN_PROGRESS : Constants.LOAN_REJECTED;
+        apr = approval==Constants.LOAN_APPROVED && income > 100000 ? 6 : 15;
         try {
         execution.setVariable("approval", approval, false);
         execution.setVariable("apr", apr, false);
