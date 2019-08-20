@@ -2,35 +2,19 @@ package com.flow.enginehouse.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity
-public class Applicant implements Serializable{
+public class Applicant{
 	 
 	private static final long serialVersionUID = 1L;
-	  @Column
-	  @GeneratedValue(strategy = GenerationType.AUTO)
-	  @Id
+
 	private Long id;
-	 @Column
 	private String name;
-	@Column
 	private String address;
-	 @Column
 	private int age;
-	 @Column
 	private int income;
-	 @Column
 	private int debts;
-	 @Column
 	private int assets;
-	 @Column
 	private int credit;
-	 @Column
 	private boolean approval;
 	 
 	 public String getName() {

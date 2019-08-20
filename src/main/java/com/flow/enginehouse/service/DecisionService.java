@@ -1,7 +1,4 @@
 package com.flow.enginehouse.service;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.flowable.common.engine.api.delegate.Expression;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
@@ -23,7 +20,7 @@ public class DecisionService implements JavaDelegate {
         approval = credit >= 600 ? true : false;
         try {
         execution.setVariable("approval", approval, false);
-        }catch(EntityNotFoundException e) {
+        }catch(Exception e) {
         	System.out.println("Entity Not Found");
         }
     }

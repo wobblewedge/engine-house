@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.flowable.engine.FormService;
 import org.flowable.engine.HistoryService;
+import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.flow.enginehouse.entity.Applicant;
-import com.flow.enginehouse.entity.ApplicantRepository;
 import java.util.ArrayList;
 
 @Service
@@ -39,7 +39,7 @@ public class ProcessWorkflowService {
 	@Autowired
 	HistoryService historyService;
 	@Autowired
-	ApplicantRepository applicantRepo;
+	ProcessEngine processEngine;
 
 	private ProcessInstance instance;
 	private Execution execution;
@@ -61,7 +61,7 @@ public class ProcessWorkflowService {
 		Map<String, Object> variables = new HashMap<>();
 		// Map each property that will be collected by the form.
 		// formEngine.getFormService().
-		variables.put("id", applicant.getId());
+		variables.put("userId", applicant.getId());
 		variables.put("name", applicant.getName());
 		variables.put("age", applicant.getAge());
 		variables.put("address", applicant.getAddress());
@@ -81,7 +81,6 @@ public class ProcessWorkflowService {
 	public void updateApproval(Applicant applicant) {
 	    applicant.setApproval(DecisionService.approval);
 	    applicant.setId(DecisionService.id);
-	    applicantRepo.saveAndFlush(applicant);
 	}
 	
 	

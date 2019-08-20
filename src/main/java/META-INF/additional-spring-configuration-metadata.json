@@ -93,5 +93,10 @@
     "name": "flowable.form.servlet.name",
     "type": "java.lang.String",
     "description": "A description for 'flowable.form.servlet.name'"
+  },
+  {
+    "name": "flowable.app.admin.password",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.app.admin.password'"
   }
 ]}
