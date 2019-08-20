@@ -61,14 +61,16 @@ public class ProcessWorkflowService {
 		Map<String, Object> variables = new HashMap<>();
 		// Map each property that will be collected by the form.
 		// formEngine.getFormService().
-		variables.put("userId", applicant.getId());
-		variables.put("name", applicant.getName());
-		variables.put("age", applicant.getAge());
+		variables.put("user id", applicant.getUserId());
+		variables.put("first name", applicant.getFirstName());
+		variables.put("last name", applicant.getLastName());
 		variables.put("address", applicant.getAddress());
-		variables.put("assets", applicant.getAssets());
-		variables.put("debts", applicant.getDebts());
-		variables.put("credit", applicant.getCredit());
-		variables.put("id", applicant.getId());
+		variables.put("email", applicant.getEmail());
+		variables.put("age", applicant.getAge());
+		variables.put("SSN", applicant.getSSN());
+		variables.put("loan amount", applicant.getLoanAmount());
+		variables.put("credit score", applicant.getCreditScore());
+		
 		instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
 		System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
 		System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
@@ -79,8 +81,8 @@ public class ProcessWorkflowService {
 	
 	@Transactional
 	public void updateApproval(Applicant applicant) {
-	    applicant.setApproval(DecisionService.approval);
-	    applicant.setId(DecisionService.id);
+	  //  applicant.setApproval(DecisionService.approval);
+	  //  applicant.setId(DecisionService.id);
 	}
 	
 	
@@ -116,8 +118,8 @@ public class ProcessWorkflowService {
 	}
 
 	@Transactional
-	public List<Task> getTasks(String assignee) {
-		List<Task> task = taskService.createTaskQuery().taskAssignee(assignee).list();
+	public List<Task> getTasks(Applicant applicant) {
+		List<Task> task = taskService.createTaskQuery().taskAssignee(applicant.getUserId()).list();
 		return task;
 	}
 

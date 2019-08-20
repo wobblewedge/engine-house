@@ -19,24 +19,16 @@
 				<flowable:value xsi:type="xsd:anyType">false</flowable:value>
 			</extensionElements>
 		</dataObject>
-		<dataObject id="dObj1" name="name" itemSubjectRef="string">
-			<extensionElements>
-				<flowable:value xsi:type="xsd:anyType" />
-			</extensionElements>
-		</dataObject>
-		<dataObject id="dObj2" name="age" itemSubjectRef="xsd:int" />
-		<dataObject id="dObj3" name="debts"
-			itemSubjectRef="xsd:int" />
-		<dataObject id="dObj4" name="assets"
-			itemSubjectRef="xsd:int" />
-		<dataObject id="dObj5" name="income"
-			itemSubjectRef="xsd:int" />
-		<dataObject id="dObj6" name="credit"
-			itemSubjectRef="xsd:int" />
-		<dataObject id="dObj8" name="address"
-			itemSubjectRef="xsd:string" />
-		<dataObject id="dObj9" name="id"
-			itemSubjectRef="xsd:string" />
+		<dataObject id="dObj1" name="userId" itemSubjectRef="string"/>
+		<dataObject id="dObj2" name="firstName" itemSubjectRef="string"/>
+		<dataObject id="dObj3" name="lastName" itemSubjectRef="string"/>
+		<dataObject id="dObj4" name="address"	itemSubjectRef="xsd:string" />
+		<dataObject id="dObj5" name="email"	itemSubjectRef="xsd:string" />
+		<dataObject id="dObj6" name="age" itemSubjectRef="xsd:int" />
+		<dataObject id="dObj7" name="SSN"	itemSubjectRef="xsd:int" />
+		<dataObject id="dObj8" name="loanAmount"	itemSubjectRef="xsd:int" />
+		<dataObject id="dObj9" name="income"	itemSubjectRef="xsd:int" />
+		<dataObject id="dObj10" name="creditScore"	itemSubjectRef="xsd:int" />
 		<startEvent id="start" flowable:formKey="loan-app"
 			name="start">
 			<outgoing>sid-96150063-91BD-4A1D-B84B-8F45527E4C1A</outgoing>

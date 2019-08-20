@@ -4,104 +4,92 @@ import java.io.Serializable;
 
 
 public class Applicant{
-	 
-	private static final long serialVersionUID = 1L;
-
-	private Long id;
-	private String name;
-	private String address;
-	private int age;
-	private int income;
-	private int debts;
-	private int assets;
-	private int credit;
-	private boolean approval;
-	 
-	 public String getName() {
-		return name;
+	 	
+	public String getUserId() {
+		return userId;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	
-	public boolean isApproval() {
-		return approval;
+	public String getFirstName() {
+		return firstName;
 	}
-
-	public void setApproval(boolean approval) {
-		this.approval = approval;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	
-	public Applicant() {}
-
-	public Applicant(String name, String address, int age, int income, int debts, int assets,
-			int credit) {
-		this.name = name;
-		this.address = address;
-		this.age = age;
-		this.income = income;
-		this.debts = debts;
-		this.assets = assets;
-		this.credit = credit;
-		this.approval = false;
+	public String getLastName() {
+		return lastName;
 	}
-	
-
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getAge() {
 		return age;
 	}
-
 	public void setAge(int age) {
 		this.age = age;
 	}
-
+	public int getLoanAmount() {
+		return loanAmount;
+	}
+	public void setLoanAmount(int loanAmount) {
+		this.loanAmount = loanAmount;
+	}
 	public int getIncome() {
 		return income;
 	}
-
 	public void setIncome(int income) {
 		this.income = income;
 	}
-
-	public int getDebts() {
-		return debts;
+	public int getSSN() {
+		return SSN;
 	}
-
-	public void setDebts(int debts) {
-		this.debts = debts;
+	public void setSSN(int sSN) {
+		SSN = sSN;
 	}
-
-	public int getAssets() {
-		return assets;
+	public int getCreditScore() {
+		return creditScore;
 	}
-
-	public void setAssets(int assets) {
-		this.assets = assets;
+	public void setCreditScore(int creditScore) {
+		this.creditScore = creditScore;
 	}
-
-	public int getCredit() {
-		return credit;
+	public Applicant(String userId, String firstName, String lastName, String address, String email, int age,
+			int loanAmount, int income, int sSN, int creditScore) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.email = email;
+		this.age = age;
+		this.loanAmount = loanAmount;
+		this.income = income;
+		SSN = sSN;
+		this.creditScore = creditScore;
 	}
-
-	public void setCredit(int credit) {
-		this.credit = credit;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	private String userId;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private String email;
+	private int age;
+	private int loanAmount;
+	private int income;
+	private int SSN;
+	private int creditScore;
+	
 }
+	 
+	
