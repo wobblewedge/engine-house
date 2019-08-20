@@ -5,8 +5,7 @@ import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 
-import org.flowable.engine.HistoryService;
-import org.flowable.engine.RepositoryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,10 +19,7 @@ import com.flow.enginehouse.entity.ApplicantRepository;
 public class EngineHouseApplication {
 	@Autowired
 	ApplicantRepository applicantRepo;
-	@Autowired
-	private RepositoryService repositoryService;
-	@Autowired
-	HistoryService historyService;
+
 	
 	public static void main(String[] args) {
 

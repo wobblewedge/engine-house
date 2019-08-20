@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flow.enginehouse.util.*;
-import com.sun.mail.iap.Response;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.flow.enginehouse.dto.ApplicantDto;
 import com.flow.enginehouse.entity.ApplicantRepository;
 import com.flow.enginehouse.service.AppService;
@@ -30,11 +30,11 @@ public class ApplicantController {
 		return appService.getApplicantById(id);
 	}
 	
-	/*@RequestMapping("repository/process-defn=initions?key=loan-2-app.bpm20.xml")
-	public String getProcessDefinitions() {
-		ResponseBody response = new Response();
-		return 
-	}*/
+	
+	@RequestMapping("repository/models")
+	public void getProcessDefinitions() {
+		
+	}
 	
 
 	@RequestMapping("")

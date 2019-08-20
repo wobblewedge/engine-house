@@ -48,5 +48,50 @@
     "name": "-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW-ENCODED-SLASH",
     "type": "java.lang.String",
     "description": "A description for '-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW-ENCODED-SLASH'"
+  },
+  {
+    "name": "flowable.process.servlet.path",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.process.servlet.path'"
+  },
+  {
+    "name": "flowable.process.servlet.name",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.process.servlet.name'"
+  },
+  {
+    "name": "flowable.process-definition-location-prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.process-definition-location-prefix'"
+  },
+  {
+    "name": "flowable.process.async-executor-activate",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.process.async-executor-activate'"
+  },
+  {
+    "name": "flowable.form.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.form.enabled'"
+  },
+  {
+    "name": "flowable.form.resource-location",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.form.resource-location'"
+  },
+  {
+    "name": "flowable.form.servlet.path",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.form.servlet.path'"
+  },
+  {
+    "name": "flowable.form.resource-suffixes",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.form.resource-suffixes'"
+  },
+  {
+    "name": "flowable.form.servlet.name",
+    "type": "java.lang.String",
+    "description": "A description for 'flowable.form.servlet.name'"
   }
 ]}
