@@ -1,6 +1,6 @@
 ~~~Loan App Engine using Spring Boot, Flowable, JPA~~~
 
-POST new application to "/applicants/save" in the shape of a json object containing:
+POST new application to "http://localhost:8080/api/bpm/loanApproval/process/startProcess in the shape of a json object containing:
 
 	{
 	"name": "Adam Wagerman",
@@ -11,6 +11,8 @@ POST new application to "/applicants/save" in the shape of a json object contain
 	"income": 30500,
 	"credit": 800
 	}
+
+Other endpoints will be found in the com.flow.enginehouse.util file.
 
 The applicant is used to start a simple flowable process that will determine the applicants eligibility using the credit score as a basis. Once the process concludes, the response returns with a few new properties tacked on:
 	ID - the index in the db
