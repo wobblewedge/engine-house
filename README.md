@@ -5,10 +5,10 @@ Endpoints found at com.flow.enginehouse.util.Constants
 Accepts a json object in the form of Applicant: POST http://localhost:8080/api/bpm/loanApproval/process/startProcess
 
 {
-	"firstName": "first",
-	"lastName":  "last",
-	"userId":	   0,
-	"SSN":	   013549999,
+	"firstName": "mick",
+	"lastName":  "rick",
+	"userId":	   "12345id",
+	"SSN":	   113549999,
 	"address":   "1 Raspberry Lane",
 	"age":	   55,
 	"income":	   44000,
