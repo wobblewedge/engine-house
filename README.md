@@ -3,13 +3,16 @@
 POST new application to "http://localhost:8080/api/bpm/loanApproval/process/startProcess in the shape of a json object containing:
 
 	{
-	"name": "Adam Wagerman",
+	"userId": "12345dd",
+	"firstName": "Adam",
+	"lastName": "Wagerman",
+	"email": "bob@bobloblobslawblog.com",
 	"address": "1 Massive Mansion",
 	"age": 49,
-	"debts": 1000,
-	"assets": 30,
+	"loanAmount": 20000,
+	"SSN": 124759755,
 	"income": 30500,
-	"credit": 800
+	"creditScore": 800
 	}
 
 Other endpoints will be found in the com.flow.enginehouse.util file.
