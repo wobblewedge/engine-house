@@ -1,174 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- origin at X=0.0 Y=0.0 -->
-<definitions
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-	xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-	xmlns:flowable="http://flowable.org/bpmn"
-	xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
-	xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="Definitions_1"
-	exporter="org.eclipse.bpmn2.modeler.core"
-	exporterVersion="1.5.0.Final-v20180515-1642-B1"
-	targetNamespace="http://www.flowable.org/processdef">
-	<process id="applicant-name" name="loan-2-app"
-		isExecutable="true">
-		<dataObject id="dObj0" name="approval"	itemSubjectRef="xsd:string"/>
-		<dataObject id="dObj1" name="userId" itemSubjectRef="xsd:string"/>
-		<dataObject id="dObj2" name="firstName" itemSubjectRef="xsd:string"/>
-		<dataObject id="dObj3" name="lastName" itemSubjectRef="xsd:string"/>
-		<dataObject id="dObj4" name="address"	itemSubjectRef="xsd:string" />
-		<dataObject id="dObj5" name="email"	itemSubjectRef="xsd:string" />
-		<dataObject id="dObj6" name="age" itemSubjectRef="xsd:int" />
-		<dataObject id="dObj7" name="SSN"	itemSubjectRef="xsd:int" />
-		<dataObject id="dObj8" name="loanAmount"	itemSubjectRef="xsd:int" />
-		<dataObject id="dObj9" name="income"	itemSubjectRef="xsd:int" />
-		<dataObject id="dObj10" name="creditScore"	itemSubjectRef="xsd:int" />
-		<startEvent id="start" flowable:formKey="loan-app"
-			name="start">
-			<outgoing>sid-96150063-91BD-4A1D-B84B-8F45527E4C1A</outgoing>
-		</startEvent>
-		<exclusiveGateway id="isAutoApproved"
-			name="is loan auto-approved" gatewayDirection="Converging"
-			default="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99">
-			<documentation id="Documentation_1">approval</documentation>
-			<incoming>sid-96150063-91BD-4A1D-B84B-8F45527E4C1A</incoming>
-			<outgoing>sid-1A1643FE-1291-42E3-933C-01A293BEAB36</outgoing>
-			<outgoing>sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99</outgoing>
-		</exclusiveGateway>
-		<endEvent id="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5"
-			name="end">
-			<incoming>end-process</incoming>
-		</endEvent>
-		<serviceTask id="sendResult" name="send result"
-			flowable:class="com.flow.enginehouse.service.DecisionService">
-			<extensionElements>
-				<flowable:field name="message">
-					<flowable:expression>Hello ${firstName} ${lastName}, your approval rating is as
-						follows: ${approval}</flowable:expression>
-				</flowable:field>
-			</extensionElements>
-		</serviceTask>
-		<sequenceFlow id="end-process" sourceRef="sendResult"
-			targetRef="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" />
-		<sequenceFlow
-			id="sid-96150063-91BD-4A1D-B84B-8F45527E4C1A" sourceRef="start"
-			targetRef="isAutoApproved" />
-		<sequenceFlow
-			id="sid-1A1643FE-1291-42E3-933C-01A293BEAB36" name="yes"
-			sourceRef="isAutoApproved" targetRef="sendResult">
-			<conditionExpression xsi:type="tFormalExpression"
-				id="FormalExpression_1"><![CDATA[${creditScore >= 700}]]></conditionExpression>
-		</sequenceFlow>
-		<sequenceFlow
-			id="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99" name="no"
-			sourceRef="isAutoApproved" targetRef="sendResult" />
-	</process>
-	<bpmndi:BPMNDiagram id="BPMNDiagram_applicant-name">
-		<bpmndi:BPMNPlane id="BPMNPlane_applicant-name"
-			bpmnElement="applicant-name">
-			<bpmndi:BPMNShape id="BPMNShape_start"
-				bpmnElement="start">
-				<omgdc:Bounds height="30.0" width="30.0" x="415.0"
-					y="240.0" />
-				<bpmndi:BPMNLabel id="BPMNLabel_1"
-					labelStyle="BPMNLabelStyle_1">
-					<omgdc:Bounds height="17.0" width="29.0" x="415.0"
-						y="270.0" />
-				</bpmndi:BPMNLabel>
-			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape id="BPMNShape_isAutoApproved"
-				bpmnElement="isAutoApproved" isMarkerVisible="true">
-				<omgdc:Bounds height="40.0" width="40.0" x="745.0"
-					y="240.0" />
-				<bpmndi:BPMNLabel id="BPMNLabel_2"
-					labelStyle="BPMNLabelStyle_1">
-					<omgdc:Bounds height="51.0" width="61.0" x="735.0"
-						y="280.0" />
-				</bpmndi:BPMNLabel>
-			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape
-				id="BPMNShape_sid-AE436AF7-1498-40BA-9C24-7C33A87034A5"
-				bpmnElement="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5">
-				<omgdc:Bounds height="28.0" width="28.0" x="1360.0"
-					y="246.0" />
-				<bpmndi:BPMNLabel id="BPMNLabel_3"
-					labelStyle="BPMNLabelStyle_1">
-					<omgdc:Bounds height="17.0" width="24.0" x="1362.0"
-						y="274.0" />
-				</bpmndi:BPMNLabel>
-			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape id="BPMNShape_sendResult"
-				bpmnElement="sendResult">
-				<omgdc:Bounds height="80.0" width="100.0" x="1095.0"
-					y="210.0" />
-				<bpmndi:BPMNLabel id="BPMNLabel_4"
-					labelStyle="BPMNLabelStyle_1">
-					<omgdc:Bounds height="17.0" width="72.0" x="1109.0"
-						y="241.0" />
-				</bpmndi:BPMNLabel>
-			</bpmndi:BPMNShape>
-			<bpmndi:BPMNEdge
-				id="BPMNEdge_sid-1A1643FE-1291-42E3-933C-01A293BEAB36"
-				bpmnElement="sid-1A1643FE-1291-42E3-933C-01A293BEAB36"
-				sourceElement="BPMNShape_isAutoApproved"
-				targetElement="BPMNShape_sendResult">
-				<omgdi:waypoint xsi:type="omgdc:Point" x="784.4448"
-					y="260.5" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="948.5"
-					y="260.5" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="952.4"
-					y="245.0" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="1095.0"
-					y="248.70197" />
-				<bpmndi:BPMNLabel id="BPMNLabel_5">
-					<omgdc:Bounds height="17.0" width="23.0" x="935.0"
-						y="261.0" />
-				</bpmndi:BPMNLabel>
-			</bpmndi:BPMNEdge>
-			<bpmndi:BPMNEdge
-				id="BPMNEdge_sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99"
-				bpmnElement="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99"
-				sourceElement="BPMNShape_isAutoApproved"
-				targetElement="BPMNShape_sendResult">
-				<omgdi:waypoint xsi:type="omgdc:Point" x="765.5"
-					y="240.5" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="765.5"
-					y="55.0" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="1141.306"
-					y="210.0" />
-				<bpmndi:BPMNLabel id="BPMNLabel_6">
-					<omgdc:Bounds height="17.0" width="16.0" x="860.0"
-						y="98.0" />
-				</bpmndi:BPMNLabel>
-			</bpmndi:BPMNEdge>
-			<bpmndi:BPMNEdge id="BPMNEdge_end-process"
-				bpmnElement="end-process" sourceElement="BPMNShape_sendResult"
-				targetElement="BPMNShape_sid-AE436AF7-1498-40BA-9C24-7C33A87034A5">
-				<omgdi:waypoint xsi:type="omgdc:Point" x="1194.95"
-					y="250.0" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="1282.5"
-					y="250.0" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="1282.5"
-					y="260.0" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="1360.0"
-					y="260.0" />
-				<bpmndi:BPMNLabel id="BPMNLabel_7" />
-			</bpmndi:BPMNEdge>
-			<bpmndi:BPMNEdge
-				id="BPMNEdge_sid-96150063-91BD-4A1D-B84B-8F45527E4C1A"
-				bpmnElement="sid-96150063-91BD-4A1D-B84B-8F45527E4C1A"
-				sourceElement="BPMNShape_start"
-				targetElement="BPMNShape_isAutoApproved">
-				<omgdi:waypoint xsi:type="omgdc:Point" x="469.95"
-					y="260.0" />
-				<omgdi:waypoint xsi:type="omgdc:Point" x="745.0"
-					y="260.0" />
-				<bpmndi:BPMNLabel id="BPMNLabel_8" />
-			</bpmndi:BPMNEdge>
-		</bpmndi:BPMNPlane>
-		<bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
-			<omgdc:Font name="arial" size="9.0" />
-		</bpmndi:BPMNLabelStyle>
-	</bpmndi:BPMNDiagram>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="applicant-name" name="loan-2-app" isExecutable="true">
+    <dataObject id="dObj0" name="approval" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <flowable:value>IN_PROGRESS</flowable:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="dObj1" name="userId" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <flowable:value></flowable:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="dObj2" name="firstName" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <flowable:value></flowable:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="dObj3" name="lastName" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <flowable:value></flowable:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="dObj4" name="address" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <flowable:value></flowable:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="dObj5" name="email" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <flowable:value></flowable:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="dObj6" name="age" itemSubjectRef="xsd:int"></dataObject>
+    <dataObject id="dObj7" name="SSN" itemSubjectRef="xsd:int"></dataObject>
+    <dataObject id="dObj8" name="loanAmount" itemSubjectRef="xsd:int"></dataObject>
+    <dataObject id="dObj9" name="income" itemSubjectRef="xsd:int"></dataObject>
+    <dataObject id="dObj10" name="creditScore" itemSubjectRef="xsd:int"></dataObject>
+    <startEvent id="start" name="start" flowable:initiator="rest-admin" flowable:formKey="loan-app"></startEvent>
+    <exclusiveGateway id="isAutoApproved" name="is loan auto-approved" default="sid-BB5269D6-CAD7-4039-9666-C2B15F86B4C1">
+      <documentation>approval</documentation>
+    </exclusiveGateway>
+    <endEvent id="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" name="end"></endEvent>
+    <serviceTask id="automatedDecision" name="automate decision" flowable:class="com.flow.enginehouse.service.DecisionService">
+      <extensionElements>
+        <flowable:field name="message">
+          <flowable:expression><![CDATA[Hello ${firstName} ${lastName}, your approval rating is as
+						follows: ${approval}]]></flowable:expression>
+        </flowable:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sid-E3991317-BA69-4DEC-B288-D987AC8B8FE9" sourceRef="automatedDecision" targetRef="isAutoApproved"></sequenceFlow>
+    <userTask id="manualReview" name="manual review" flowable:assignee="$INITIATOR">
+      <extensionElements>
+        <modeler:activiti-idm-initiator xmlns:modeler="http://flowable.org/modeler"><![CDATA[true]]></modeler:activiti-idm-initiator>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="sid-96150063-91BD-4A1D-B84B-8F45527E4C1A" sourceRef="start" targetRef="automatedDecision"></sequenceFlow>
+    <sequenceFlow id="sid-69C43B89-2F62-4F71-A49D-EF6C1F77868C" sourceRef="sendDecision" targetRef="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5"></sequenceFlow>
+    <sequenceFlow id="sid-6C9292B7-369D-4B50-9DD1-89775F883684" sourceRef="manualReview" targetRef="sendDecision"></sequenceFlow>
+    <sequenceFlow id="sid-BB5269D6-CAD7-4039-9666-C2B15F86B4C1" sourceRef="isAutoApproved" targetRef="manualReview"></sequenceFlow>
+    <serviceTask id="sendDecision" name="send decision" flowable:type="mail">
+      <extensionElements>
+        <flowable:field name="to">
+          <flowable:expression><![CDATA[${email}]]></flowable:expression>
+        </flowable:field>
+        <flowable:field name="from">
+          <flowable:string><![CDATA[andobrown71@gmail.com]]></flowable:string>
+        </flowable:field>
+        <flowable:field name="subject">
+          <flowable:string><![CDATA[Loan Decision]]></flowable:string>
+        </flowable:field>
+        <flowable:field name="bcc">
+          <flowable:string><![CDATA[andrew.d.brown@cgi.com]]></flowable:string>
+        </flowable:field>
+        <flowable:field name="html">
+          <flowable:expression><![CDATA[<html><body>Thank you for your application. The results of your attempt to secure a loan through XYZ Bank are as follows:
+
+Application Id- ${processId}
+Loan Decision- ${loanDecision}
+APR: ${apr!=null? 'APR-${apr}'  : 'Apply again after 6 months.'}
+
+If you have any questions or concerns please contact your local branch. Do not respond to this automated message.</body></html>]]></flowable:expression>
+        </flowable:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sid-1A1643FE-1291-42E3-933C-01A293BEAB36" name="yes" sourceRef="isAutoApproved" targetRef="sendDecision">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${loanDecision != "IN_PROGRESS"}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_applicant">
+    <bpmndi:BPMNPlane bpmnElement="applicant" id="BPMNPlane_applicant">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="30.0" width="30.0" x="405.0" y="235.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="isAutoApproved" id="BPMNShape_isAutoApproved">
+        <omgdc:Bounds height="40.0" width="40.0" x="735.0" y="225.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" id="BPMNShape_sid-AE436AF7-1498-40BA-9C24-7C33A87034A5">
+        <omgdc:Bounds height="28.0" width="28.0" x="1360.0" y="221.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="automatedDecision" id="BPMNShape_automatedDecision">
+        <omgdc:Bounds height="80.0" width="100.0" x="540.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="manualReview" id="BPMNShape_manualReview">
+        <omgdc:Bounds height="80.0" width="100.0" x="810.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendDecision" id="BPMNShape_sendDecision">
+        <omgdc:Bounds height="80.0" width="100.0" x="1020.0" y="205.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-69C43B89-2F62-4F71-A49D-EF6C1F77868C" id="BPMNEdge_sid-69C43B89-2F62-4F71-A49D-EF6C1F77868C">
+        <omgdi:waypoint x="1119.949999999849" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1240.0" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1240.0" y="235.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1360.0" y="235.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-BB5269D6-CAD7-4039-9666-C2B15F86B4C1" id="BPMNEdge_sid-BB5269D6-CAD7-4039-9666-C2B15F86B4C1">
+        <omgdi:waypoint x="763.8391" y="233.86"></omgdi:waypoint>
+        <omgdi:waypoint x="831.2714776632303" y="139.95"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-1A1643FE-1291-42E3-933C-01A293BEAB36" id="BPMNEdge_sid-1A1643FE-1291-42E3-933C-01A293BEAB36">
+        <omgdi:waypoint x="774.9430049088359" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="897.5" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="897.5" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1019.9999999998853" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-6C9292B7-369D-4B50-9DD1-89775F883684" id="BPMNEdge_sid-6C9292B7-369D-4B50-9DD1-89775F883684">
+        <omgdi:waypoint x="909.9499999999999" y="137.5877875269197"></omgdi:waypoint>
+        <omgdi:waypoint x="1020.0" y="220.4013214075508"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-E3991317-BA69-4DEC-B288-D987AC8B8FE9" id="BPMNEdge_sid-E3991317-BA69-4DEC-B288-D987AC8B8FE9">
+        <omgdi:waypoint x="639.9499999999999" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="687.5" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="687.5" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="245.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-96150063-91BD-4A1D-B84B-8F45527E4C1A" id="BPMNEdge_sid-96150063-91BD-4A1D-B84B-8F45527E4C1A">
+        <omgdi:waypoint x="434.94999914730766" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="540.0" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </definitions>

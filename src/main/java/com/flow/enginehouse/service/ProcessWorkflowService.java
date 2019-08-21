@@ -20,6 +20,8 @@ import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.core.JsonParseException;
 import com.flow.enginehouse.entity.Applicant;
 import java.util.ArrayList;
 
@@ -42,6 +44,7 @@ public class ProcessWorkflowService {
 	ProcessEngine processEngine;
 
 	private ProcessInstance instance;
+	static String instanceId;
 	private Execution execution;
 	private Map<String, String> historyInfo = new HashMap<>();
 
@@ -76,6 +79,7 @@ public class ProcessWorkflowService {
 		System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
 		System.out.println("Number of tasks after process start: " + taskService.createTaskQuery().count());
 		report.put("Process Instance ID: ",instance.getRootProcessInstanceId());
+		instanceId=instance.getRootProcessInstanceId();
 		return report;
 	}
 	
