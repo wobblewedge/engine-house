@@ -61,15 +61,15 @@ public class ProcessWorkflowService {
 		Map<String, Object> variables = new HashMap<>();
 		// Map each property that will be collected by the form.
 		// formEngine.getFormService().
-		variables.put("user id", applicant.getUserId());
-		variables.put("first name", applicant.getFirstName());
-		variables.put("last name", applicant.getLastName());
+		variables.put("userId", applicant.getUserId());
+		variables.put("firstName", applicant.getFirstName());
+		variables.put("lastName", applicant.getLastName());
 		variables.put("address", applicant.getAddress());
 		variables.put("email", applicant.getEmail());
 		variables.put("age", applicant.getAge());
 		variables.put("SSN", applicant.getSSN());
-		variables.put("loan amount", applicant.getLoanAmount());
-		variables.put("credit score", applicant.getCreditScore());
+		variables.put("loanAmount", applicant.getLoanAmount());
+		variables.put("creditScore", applicant.getCreditScore());
 		
 		instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
 		System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());

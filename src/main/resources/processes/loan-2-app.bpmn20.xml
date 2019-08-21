@@ -13,15 +13,10 @@
 	targetNamespace="http://www.flowable.org/processdef">
 	<process id="applicant-name" name="loan-2-app"
 		isExecutable="true">
-		<dataObject id="dObj0" name="approval"
-			itemSubjectRef="xsd:boolean">
-			<extensionElements>
-				<flowable:value xsi:type="xsd:anyType">false</flowable:value>
-			</extensionElements>
-		</dataObject>
-		<dataObject id="dObj1" name="userId" itemSubjectRef="string"/>
-		<dataObject id="dObj2" name="firstName" itemSubjectRef="string"/>
-		<dataObject id="dObj3" name="lastName" itemSubjectRef="string"/>
+		<dataObject id="dObj0" name="approval"	itemSubjectRef="xsd:string"/>
+		<dataObject id="dObj1" name="userId" itemSubjectRef="xsd:string"/>
+		<dataObject id="dObj2" name="firstName" itemSubjectRef="xsd:string"/>
+		<dataObject id="dObj3" name="lastName" itemSubjectRef="xsd:string"/>
 		<dataObject id="dObj4" name="address"	itemSubjectRef="xsd:string" />
 		<dataObject id="dObj5" name="email"	itemSubjectRef="xsd:string" />
 		<dataObject id="dObj6" name="age" itemSubjectRef="xsd:int" />
@@ -49,7 +44,7 @@
 			flowable:class="com.flow.enginehouse.service.DecisionService">
 			<extensionElements>
 				<flowable:field name="message">
-					<flowable:expression>Hello ${name}, your approval rating is as
+					<flowable:expression>Hello ${firstName} ${lastName}, your approval rating is as
 						follows: ${approval}</flowable:expression>
 				</flowable:field>
 			</extensionElements>
@@ -63,7 +58,7 @@
 			id="sid-1A1643FE-1291-42E3-933C-01A293BEAB36" name="yes"
 			sourceRef="isAutoApproved" targetRef="sendResult">
 			<conditionExpression xsi:type="tFormalExpression"
-				id="FormalExpression_1"><![CDATA[${credit >= 700}]]></conditionExpression>
+				id="FormalExpression_1"><![CDATA[${creditScore >= 700}]]></conditionExpression>
 		</sequenceFlow>
 		<sequenceFlow
 			id="sid-BA4CBF9F-A155-4F0F-A936-D23A68DD2A99" name="no"

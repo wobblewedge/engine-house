@@ -9,14 +9,14 @@ public class DecisionService implements JavaDelegate {
 	ProcessWorkflowService service;
 	
 	public static boolean approval;
-	public static Long id;
+	public static String userId;
 	
 	//In xml, this is the flowable:expression with embedded variables. Can alter them here.
 	private Expression message;
 	@Override
     public void execute(DelegateExecution execution) {
-        int credit = (Integer)execution.getVariable("credit");
-        id = (Long) execution.getVariable("id");
+        int credit = (Integer)execution.getVariable("creditScore");
+        userId = (String) execution.getVariable("userId");
         approval = credit >= 600 ? true : false;
         try {
         execution.setVariable("approval", approval, false);

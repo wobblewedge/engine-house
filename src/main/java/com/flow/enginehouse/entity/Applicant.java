@@ -1,7 +1,5 @@
 package com.flow.enginehouse.entity;
 
-import java.io.Serializable;
-
 
 public class Applicant{
 	 	
