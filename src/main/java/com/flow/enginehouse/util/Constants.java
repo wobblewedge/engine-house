@@ -7,11 +7,11 @@ public interface Constants {
 	static final String SAVE_USER = "/save";
 	static final String ROOT_API = "/api/bpm/loanApproval";
 	static final String SUBMIT_PROCESS = "/process/startProcess";
-	static final String RETRIEVE_TAKS = "/task/retrieveTasks";
-	static final String RETRIEVE_PROCESSES = "/retrieveProcesses/{id}";
+	static final String RETRIEVE_TASKS = "/task/retrieveTasks";
+	static final String RETRIEVE_PROCESSES = "/retrieveProcesses/{userId}";
 	static final String COMPLETE_TASK = "/task/completeTask";
 	
-	//Loan Possibilities
+	//Loan Possibilitie
 	static final String LOAN_APPROVED = "APPROVED";
 	static final String LOAN_REJECTED = "REJECTED";
 	static final String LOAN_PROGRESS = "IN_PROGRESS";

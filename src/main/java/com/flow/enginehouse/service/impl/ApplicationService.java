@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,10 @@ public class ApplicationService{
 	@Autowired
 	private ProcessWorkflowService service;
 
+	private Map<String,Object> details = new HashMap<>();
+
 	
 	public Map<String,Object> instantiateProcess(Applicant applicant) {
-		Map<String,Object> details = new HashMap<>();
 		if(applicant==null) {
 			throw new ResourceNotFoundException("Empty Request Body Not Allowed");
 		}else {
@@ -30,6 +32,11 @@ public class ApplicationService{
 	    details.put("Applicant Info:" , applicant);
 		return details;
 		}
+	}
+	
+	public List<Task> getUserTasks(){
+	String assignee=(String) details.get("userId");
+	return service.getTasks(assignee);
 	}
 	
 

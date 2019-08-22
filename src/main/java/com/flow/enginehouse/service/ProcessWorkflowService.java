@@ -89,20 +89,6 @@ public class ProcessWorkflowService {
 		vars.put("apr", DecisionService.apr);
 	}
 	
-	
-	public boolean getFinalStatus(String processInstanceId) {
-		Map<String,Object> variables = instance.getProcessVariables();
-		
-		boolean approval = (boolean) variables.get("approval");
-		return approval;
-	}
-
-	public List<FormProperty> getForm() {
-		FormData fd = formService.getStartFormData(instance.getProcessDefinitionId());
-		return fd.getFormProperties();
-
-	}
-
 	public Map<String, String> writeHistory() {
 		if (historyService.createHistoricActivityInstanceQuery().list().isEmpty()) {
 			System.out.print("Nothing here yet!");
@@ -121,11 +107,11 @@ public class ProcessWorkflowService {
 		return historyInfo;
 	}
 
-	@Transactional
+	/*@Transactional
 	public List<Task> getTasks(Applicant applicant) {
 		List<Task> task = taskService.createTaskQuery().taskAssignee(applicant.getUserId()).list();
 		return task;
-	}
+	}*/
 
 	@Transactional
 	public Map<String, Object> getInfo() {
@@ -139,6 +125,13 @@ public class ProcessWorkflowService {
 			applicantInfo.put(execution.getName(), execution.getProcessInstanceId());
 		}
 		return applicantInfo;
+	}
+	
+	@Transactional
+	public List<Task> getTasks(String assignee) {
+		//query needs to be fixed
+		List<Task> tasks = taskService.createTaskQuery().taskAssignee("admin").list();
+		return tasks;
 	}
 
 }

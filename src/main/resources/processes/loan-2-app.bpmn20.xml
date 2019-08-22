@@ -36,7 +36,7 @@
     <dataObject id="dObj8" name="loanAmount" itemSubjectRef="xsd:int"></dataObject>
     <dataObject id="dObj9" name="income" itemSubjectRef="xsd:int"></dataObject>
     <dataObject id="dObj10" name="creditScore" itemSubjectRef="xsd:int"></dataObject>
-    <startEvent id="start" name="start" flowable:initiator="rest-admin" flowable:formKey="loan-app"></startEvent>
+    <startEvent id="start" name="start" flowable:initiator="admin" flowable:formKey="loan-app"></startEvent>
     <exclusiveGateway id="isAutoApproved" name="is loan auto-approved" default="sid-BB5269D6-CAD7-4039-9666-C2B15F86B4C1">
       <documentation>approval</documentation>
     </exclusiveGateway>
