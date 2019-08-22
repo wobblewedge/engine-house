@@ -26,7 +26,7 @@ public class ApplicationService{
 		}else {
 		service.manageDeployment();
 		details.putAll(service.startProcess(applicant));
-//	    service.updateApproval(applicant);
+	    service.updateApproval(details);
 	    details.put("Applicant Info:" , applicant);
 		return details;
 		}

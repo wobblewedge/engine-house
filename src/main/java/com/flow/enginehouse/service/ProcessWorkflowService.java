@@ -84,9 +84,9 @@ public class ProcessWorkflowService {
 	}
 	
 	@Transactional
-	public void updateApproval(Applicant applicant) {
-	  //  applicant.setApproval(DecisionService.approval);
-	  //  applicant.setId(DecisionService.id);
+	public void updateApproval(Map<String,Object> vars) {
+		vars.put("loanDecision", DecisionService.loanDecision);
+		vars.put("apr", DecisionService.apr);
 	}
 	
 	
