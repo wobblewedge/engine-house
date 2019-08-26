@@ -42,15 +42,9 @@
     </exclusiveGateway>
     <endEvent id="sid-AE436AF7-1498-40BA-9C24-7C33A87034A5" name="end"></endEvent>
     <serviceTask id="automatedDecision" name="automate decision" flowable:class="com.flow.enginehouse.service.DecisionService">
-      <extensionElements>
-        <flowable:field name="message">
-          <flowable:expression><![CDATA[Hello ${firstName} ${lastName}, your approval rating is as
-						follows: ${approval}]]></flowable:expression>
-        </flowable:field>
-      </extensionElements>
     </serviceTask>
     <sequenceFlow id="sid-E3991317-BA69-4DEC-B288-D987AC8B8FE9" sourceRef="automatedDecision" targetRef="isAutoApproved"></sequenceFlow>
-    <userTask id="manualReview" name="manual review" flowable:assignee="$INITIATOR">
+    <userTask id="manualReview" name="manual review" flowable:assignee="rest-admin">
       <extensionElements>
         <modeler:activiti-idm-initiator xmlns:modeler="http://flowable.org/modeler"><![CDATA[true]]></modeler:activiti-idm-initiator>
       </extensionElements>

@@ -3,9 +3,11 @@ package com.flow.enginehouse.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.flowable.engine.FormService;
 import org.flowable.engine.HistoryService;
+import org.flowable.engine.IdentityService;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -13,9 +15,12 @@ import org.flowable.engine.TaskService;
 import org.flowable.engine.form.FormData;
 import org.flowable.engine.form.FormProperty;
 import org.flowable.engine.history.HistoricActivityInstance;
+import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.form.api.FormRepositoryService;
+import org.flowable.idm.api.User;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.flow.enginehouse.entity.Applicant;
 import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 public class ProcessWorkflowService {
@@ -42,7 +48,9 @@ public class ProcessWorkflowService {
 	HistoryService historyService;
 	@Autowired
 	ProcessEngine processEngine;
-
+	@Autowired
+	IdentityService identityService;
+	
 	private ProcessInstance instance;
 	static String instanceId;
 	private Execution execution;
@@ -52,6 +60,8 @@ public class ProcessWorkflowService {
 	public void manageDeployment() {
 		String formPath = "forms/loan-app.form";
 		String processPath = "processes/loan-2-app.bpmn20.xml";
+		identityService.newGroup("admins");
+	    identityService.newGroup("applicants");
 		// deploy process repository
 		repositoryService.createDeployment().addClasspathResource(processPath).deploy();
 		// deploy form repository
@@ -73,8 +83,11 @@ public class ProcessWorkflowService {
 		variables.put("SSN", applicant.getSSN());
 		variables.put("loanAmount", applicant.getLoanAmount());
 		variables.put("creditScore", applicant.getCreditScore());
-		
-		instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
+		try {
+			  instance = runtimeService.startProcessInstanceByKey("applicant-name", variables);
+			} finally {
+			  identityService.setAuthenticatedUserId(null);
+			}
 		System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
 		System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
 		System.out.println("Number of tasks after process start: " + taskService.createTaskQuery().count());
@@ -128,10 +141,24 @@ public class ProcessWorkflowService {
 	}
 	
 	@Transactional
-	public List<Task> getTasks(String assignee) {
+	public List<ProcessDefinition> retrieveActiveProcesses(){
+		List<ProcessDefinition> activeProcesses = repositoryService.createProcessDefinitionQuery().active().list();
+		return activeProcesses;
+	}
+	@Transactional
+	public List<ProcessDefinition> getUserProcesses(String userId){
+		List<ProcessDefinition> myProcesses = repositoryService.createProcessDefinitionQuery().startableByUser(userId).list();
+		return myProcesses;
+	}
+	@Transactional
+	public Map<String,Object> getTasks(String assignee) {
 		//query needs to be fixed
-		List<Task> tasks = taskService.createTaskQuery().taskAssignee("admin").list();
-		return tasks;
+		Map<String,Object> taskList = new HashMap<>();
+		List<Task> tasks = taskService.createTaskQuery().taskAssignee(assignee).list();
+		for(Task t: tasks) {
+			taskList.put(t.getId(), t.getAssignee());
+		}
+		return taskList;
 	}
 
 }
