@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.MediaType;
@@ -37,7 +40,8 @@ public class ApplicationService{
 	
 	public Map<String,Object> getUserTasks(){
 	String assignee= (String) details.get("userId");
-	return service.getTasks("admin");
+	System.out.println(assignee);
+	return service.getTasks(assignee);
 	}
 
 
@@ -48,6 +52,16 @@ public class ApplicationService{
 			activeProcesses.put("ProcessDefinition", objMap.convertValue(pd, Map.class));
 		}
 		return activeProcesses;
+	}
+	
+	public JSONArray retrieveActiveProcessInstances() {
+		List<ProcessInstance> activeInstances = service.retrieveActiveInstances();
+		JSONArray json = new JSONArray();
+		for(ProcessInstance pi: activeInstances) {
+			Map<String,Object> deetMap = objMap.convertValue(pi, Map.class);
+			json.put(deetMap);
+		}
+		return json;
 	}
 	
 	
@@ -65,3 +79,4 @@ public class ApplicationService{
 		return ApplicantConverter.entityToDto(applicantRepo.getOne(id));
 	}*/
 }
+;;

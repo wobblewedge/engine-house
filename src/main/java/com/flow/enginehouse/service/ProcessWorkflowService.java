@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.mapping.FetchType;
 import org.flowable.engine.FormService;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.IdentityService;
@@ -22,6 +23,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.form.api.FormRepositoryService;
 import org.flowable.idm.api.User;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -145,6 +147,12 @@ public class ProcessWorkflowService {
 		List<ProcessDefinition> activeProcesses = repositoryService.createProcessDefinitionQuery().active().list();
 		return activeProcesses;
 	}
+	
+	@Transactional
+	public List<ProcessInstance> retrieveActiveInstances(){
+		List<ProcessInstance> activeInstances = runtimeService.createProcessInstanceQuery().active().list();
+		return activeInstances;
+	}
 	@Transactional
 	public List<ProcessDefinition> getUserProcesses(String userId){
 		List<ProcessDefinition> myProcesses = repositoryService.createProcessDefinitionQuery().startableByUser(userId).list();
@@ -159,6 +167,12 @@ public class ProcessWorkflowService {
 			taskList.put(t.getId(), t.getAssignee());
 		}
 		return taskList;
+	}
+	@Transactional
+	public void completeTask(String taskId){
+		Map<String,Object> task = new HashMap<>();
+		TaskQuery theTask = taskService.createTaskQuery().taskId(taskId);
+		taskService.complete(taskId);
 	}
 
 }
